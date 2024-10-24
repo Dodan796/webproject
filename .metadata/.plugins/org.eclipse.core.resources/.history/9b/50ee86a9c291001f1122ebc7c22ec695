@@ -1,0 +1,17 @@
+#general setting
+spring.application.name=spring_boot_mybatis
+
+server.port=8080
+
+#JSP view setting
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+#database connection
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=C##SHOPDBUSER
+spring.datasource.password=1234
+
+#mapoper-location
+mybatis.mapper-locations=classpath:mappers/*.xml

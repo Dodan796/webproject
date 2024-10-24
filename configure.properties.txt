@@ -1,0 +1,5 @@
+#database connection
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=C##SHOPDBUSER
+spring.datasource.password=1234

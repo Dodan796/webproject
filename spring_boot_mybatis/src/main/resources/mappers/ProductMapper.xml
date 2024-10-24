@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- mapper 구성할 관련 인터페이스 경로 및 인터페이스명 전달(namespace)  -->
+<mapper namespace="com.spring_boot_mybatis.project.dao.IProductDAO">
+
+	<!-- 반환될 데이터 셋 구조 및 연결 컬럼 설정  -->
+	<resultMap id="prdResult" type="com.spring_boot_mybatis.project.model.ProductVO">
+		<result property="prdNo" column="prdNo"/>
+		<result property="prdName" column="prdName"/>
+		<result property="prdPrice" column="prdPrice"/>
+		<result property="prdCompany" column="prdCompany"/>
+		<result property="prdStock" column="prdStock"/>
+		<result property="prdDate" column="prdDate"/>		
+	</resultMap>
+	
+	<!-- 전체 상품 조회  --><!-- id는 IProductDAO 추상메소드 이름과 동일하게 구성해야 해당 추상 메소드를 구현하게됨  -->
+	<!-- 아래 쿼리에서 홀더 문자가 없음(즉 결정되지 않은 값이 없음, param이 필요 없음, 대신 반환되는 값이 있으므로 반환타입을 써줘야 함  -->
+	<select id="listAllProduct" resultMap="prdResult">
+		SELECT * FROM product2 ORDER BY prdNo
+	</select>
+
+	<!-- 1개 상품 정보 등록, db 테이블에 데이터 삽입 삽입할 데이터가 필요  -->	
+	<!-- insert 쿼리는 입력 값이 사용자에 의해 입력 form데이터 전달되어져서 dao까지 전달됨. 고정값이 아님 -->
+	<!-- 홀더기호(#{})이용해서 값이 전달되면 바인딩 되게 구성해야 함 -->
+	<insert id="insertProduct" parameterType="com.spring_boot_mybatis.project.model.ProductVO">
+		INSERT INTO product2(prdNo, prdName, prdPrice, prdCompany, prdStock, prdDate)
+		VALUES (#{prdNo}, #{prdName}, #{prdPrice}, #{prdCompany},#{prdStock}, #{prdDate})
+	</insert>
+	
+	<!-- 상품 상세 정보 페이지 -->
+	<select id="detailViewProduct" parameterType="string" resultType="com.spring_boot_mybatis.project.model.ProductVO">
+		SELECT * FROM product2 WHERE prdNo=#{prdNo}
+	</select>
+	
+	<!-- 상품 정보 수정 : 수정된 정보 DB에 update (상품번호 변경 안함:기본키 변경하지 않음)  -->
+	<update id="updateProduct" parameterType="com.spring_boot_mybatis.project.model.ProductVO">
+		UPDATE product2 SET prdName=#{prdName}, prdPrice=#{prdPrice}, prdCompany=#{prdCompany},
+							prdStock=#{prdStock}, prdDate=#{prdDate}
+		WHERE prdNo=#{prdNo}		
+	</update>
+	
+	<!-- 상품정보 삭제 : 조건문 없으면 모든 레코드 삭제됨 (주의) -->
+	<delete id="deleteProduct" parameterType="string">
+		DELETE FROM product2 WHERE prdNo=#{prdNo}
+	</delete>
+	
+	<!-- 상품번호 중복 확인 : 매개변수로 전달된 번호를 이용해서 select 후 조회되는 값이 있는지 확인
+		조회되는 값이 있으면 사용불가, 없으면 사용가능 mapper에서는 조회해서 나온 결과만 문자열로 반환하고 종료
+		사용여부 체크는 컨트롤러에서 진행-->
+	<select id="prdNoCheck" parameterType="string" resultType="string">
+		SELECT prdNo FROM product2 WHERE prdNo=#{prdNo}
+	</select>		
+	
+	<!-- 상품검색  -->
+	<!-- WHERE절 관련 컬럼이 2경우가 나옴 
+		 제조사 검색 prdCompany like '%삼성%'
+		 상품명 검색 prdName like '%모니터%'
+	  -->
+	<select id="productSearch" parameterType="hashmap" resultMap="prdResult">
+		SELECT * FROM product2 WHERE
+			<choose>
+				<when test="type != null and type.equals('prdName')"> <!-- 상품명 검색  -->
+					prdName LIKE '%'||#{keyword}||'%'
+				</when>
+				<when test="type != null and type.equals('prdCompany')"> <!--제조사 검색 -->
+					prdCompany LIKE '%'||#{keyword}||'%'
+				</when>
+			</choose>
+	</select>
+</mapper> 
+
+
+
+
+
+
+
+
+
+ 
