@@ -28,7 +28,8 @@ public class FileUploadController {
 	public String fileUpload(@RequestParam("uploadFile") MultipartFile file, Model model) throws IOException {
 		//1.파일 저장 경로 변수 (문자열형 변수) : 서버측에서 사용할 저장소의 주소(현재 컴퓨터의 파일시스템 c드라이브에 저장할 예정)
 		//경로 마지막에 / 있어야 함
-		String uploadPath="C:/springBootWorkspace/upload/";  //경로는 /로 끝나야 함(파일명은 뒤에 추가함)
+		//String uploadPath="C:/springBootWorkspace/upload/";  //경로는 /로 끝나야 함(파일명은 뒤에 추가함)
+		String uploadPath = "/usr/local/project/upload/"; // 서버 경로
 		
 		//2.원본 파일 이름 저장(변경되는 파일명에 원파일명을 포함시키기 위해 변수에 저장)
 		String originalFileName = file.getOriginalFilename();//전송된 파일명을 반환
