@@ -1,0 +1,168 @@
+/* 전체 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'myriad';
+}
+
+#wrap {
+    width: 100%;
+    height: 100vh;
+    background-color: #e5e0da;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+a{
+	text-decoration: none;
+}
+
+/* 버튼 태그 기본 css 제거 */
+button{
+	max-width: 150px;
+	font-family: inherit;
+	cursor: pointer;
+	text-decoration: none;
+	border: none;
+	outline: 0;
+	border-radius: 25px;
+	background-color:#583b1f;
+	color:#e5e0da;
+}
+
+
+/* 인트로 이미지 */
+.introTitle img {
+    opacity: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* 메인 타이틀 */
+.main-title {
+    position: relative;
+    z-index: 2;
+    color: #583b1f;
+    /* 글자 크기 조정 */
+    font-size: 4.3vw; /* 너비에 따라 글자 크기 조정 */
+    font-weight: 800;
+    /* 제목 글자 우측 정렬 */
+    text-align: right;
+    margin-top: 5vh;
+    /* padding 수정 */
+    padding: 0 5%; 
+    line-height: 1.2; 
+}
+
+section div {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: 20px;
+    align-items: center;
+}
+
+/* 라벨 왼쪽 정렬 */
+label {
+    display: block;
+    text-align: left; 
+    margin-bottom: 5px; 
+}
+
+/* input 필드 중앙 정렬 */
+.loginForm input.formTxt {
+    display: block;
+    margin: 0 auto; /* 중앙 정렬 */
+    width: 100%; 
+    max-width: 600px; 
+    padding: 10px;
+    border-radius: 30px;
+    font-size: 15px;
+    border: none;
+    line-height: 30px;
+    color: #583b1f;
+    background-color: #f2f2f2; 
+}
+
+/* 로그인 폼 중앙 정렬 */
+.loginForm {
+    width: 100%; 
+    max-width: 500px; 
+    margin: 30px auto; 
+    padding: 20px;
+    text-align: center;
+    color: #583b1f;
+    border-radius: 20px;
+    margin-bottom:20px;
+}
+
+/* 로그인 버튼 중앙 정렬 */
+.loginForm #loginSubmit {
+    width: 100px;
+    height: 40px;
+    padding: 10px;
+    display: block;
+    float: right;
+}
+
+
+.btn {
+    margin-top: 10px;
+    max-width: 150px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 300;
+    cursor: pointer;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.btnFilled {
+    background-color: #583b1f;
+    color: #e5e0da;
+}
+
+
+.btnUnfilled {
+    background-color: #e5e0da;
+    color: #583b1f;
+    border: solid 1.5px #583b1f;
+}
+
+/* 버튼 hover */
+.btnFilled:hover {
+    background-color: #71543d;
+    transition: background-color 0.3s ease;
+}
+
+/* 화면 크기 조정시 글자크기 */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 8vw; /* 작은 화면 */
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 6vw; /* 더 작은 화면 */
+    }
+}
+section {/* 섹션 화면 우측 이동 */
+	width: 70%;
+    position: relative;
+    left: 30%; /* 화면의 30%에서 시작 */
+    text-align: center; 
+}
