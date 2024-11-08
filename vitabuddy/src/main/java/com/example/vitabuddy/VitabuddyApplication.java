@@ -8,6 +8,14 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.example.vitabuddy" })
 @MapperScan(basePackages = { "com.example.vitabuddy" })
+
+//DB 연결정보 : 프로퍼티 사용
+//로컬 경로 / 서버 경로
+@PropertySources({
+@PropertySource(value={"file: c:/webservice/vitabuddy/configure.properties",
+"file:/usr/local/project/properties/configure.properties", },
+ignoreResourceNotFound=true)
+})
 public class VitabuddyApplication {
 
     public static void main(String[] args) {
