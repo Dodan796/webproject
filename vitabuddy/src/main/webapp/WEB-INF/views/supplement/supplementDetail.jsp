@@ -323,7 +323,7 @@
 							<td colspan="3">복용기간: <fmt:formatDate
 									value="${review.startDate}" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate
 									value="${review.endDate}" pattern="yyyy-MM-dd" /></td>
-							<td  colspan="2">해시태그: ${review.reviewHashtag}</td>
+							<td colspan="2">해시태그: ${review.reviewHashtag}</td>
 							<td>
 								<div class="rate">
 									<c:forEach var="i" begin="1" end="5">
@@ -398,3 +398,4 @@
 		<c:import url="/WEB-INF/views/layout/footer.jsp" />
 	</div>
 </body>
+</html>

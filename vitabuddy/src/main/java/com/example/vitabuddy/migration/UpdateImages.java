@@ -16,8 +16,8 @@ public class UpdateImages {
         // 시작 SupID 및 파일 시작 경로
         int startId = 1000;
         int endId = 1200; 
-        //String basePath = "C:\\supplement_images\\"; // 이미지 파일 경로 (C 드라이브 아래 suppement_images 폴더)
-        String basePath = "/usr/local/project/supplement_images/";
+        String basePath = "C:\\supplement_images\\"; // 이미지 파일 경로 (C 드라이브 아래 suppement_images 폴더)
+        
         try (Connection conn = DriverManager.getConnection(jdbcUrl, username, password)) {
         	conn.setAutoCommit(false);
             String sql = "UPDATE supplement SET SupImg = ? WHERE SupID = ?";

@@ -15,9 +15,7 @@
 <body>
 <div id="wrap">
 <c:import url="/WEB-INF/views/layout/top.jsp" />
-
 	<h1>VITABUDDY</h1>
-
 	<!-- 검색창 -->
 	<div class="search">
 	<form class="searchBox" id="searchForm" method="get" action="<c:url value='/supplement/supplementList'/>">
@@ -31,12 +29,10 @@
 <section class="home">
 	<!-- 메인메뉴 -->
 	<div class="mainMenu">
-
 	<!-- 로그인 하지 않은 경우 -->
 		<c:if test="${empty sessionScope.sid }">
 		<a href="<c:url value='/supplement/supplementList'/>"><img src="<c:url value='/image/prdList.png'/>" class="menuImg"><br>상점</a>
 		</c:if>
-
 	<!-- 로그인 한 경우 -->
 		<c:if test="${not empty sessionScope.sid }">
 		<a href="<c:url value='/supplement/supplementList'/>"><img src="<c:url value='/image/prdList.png'/>" class="menuImg"><br>상점</a>
@@ -132,3 +128,4 @@
 
 </div>
 </body>
+</html>

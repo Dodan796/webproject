@@ -14,7 +14,6 @@
 </head>
 <body>
     <c:import url="/WEB-INF/views/layout/top.jsp"/>
-
     <section id="wrap"> <!-- div 에서 section으로 변경 -->
         <div class="container">
             <div class="headers"><!-- 헤더 따로 div 제공 -->
@@ -89,5 +88,5 @@
         </div>
     </section>
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
-
 </body>
+</html>

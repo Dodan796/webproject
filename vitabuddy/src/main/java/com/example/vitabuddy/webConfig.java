@@ -20,11 +20,9 @@ public class webConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
     	  registry.addResourceHandler("/images/**")
-    	  .addResourceLocations("files:///usr/local/project/supplement_images/"); //서버경로
-    	  //.addResourceLocations("file:///C:/supplement_images/"); // 로컬경로
+          .addResourceLocations("file:///C:/supplement_images/");
     	  
     	  registry.addResourceHandler("/Review_Upload/**")
-          //.addResourceLocations("file:///C:/Review_Upload/");
-    	  .addResourceLocations("files:///usr/local/project/upload/");
+          .addResourceLocations("file:///C:/Review_Upload/");
     }
 }
