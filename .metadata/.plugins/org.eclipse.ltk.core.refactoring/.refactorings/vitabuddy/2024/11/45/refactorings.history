@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;com.example.vitabuddy.migration.UpdateImages.java&apos; to &apos;V28__UpdateImages.java&apos;&#x0D;&#x0A;- Original project: &apos;vitabuddy&apos;&#x0D;&#x0A;- Original element: &apos;com.example.vitabuddy.migration.UpdateImages.java&apos;&#x0D;&#x0A;- Renamed element: &apos;com.example.vitabuddy.migration.V28__UpdateImages.java&apos;" description="Rename compilation unit &apos;UpdateImages.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.example.vitabuddy.migration{UpdateImages.java" name="V28__UpdateImages.java" references="false" stamp="1731043734588" version="1.0"/>
+</session>
