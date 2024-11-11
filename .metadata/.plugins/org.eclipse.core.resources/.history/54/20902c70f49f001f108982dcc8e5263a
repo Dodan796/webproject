@@ -56,7 +56,7 @@ $(document).ready(function () {
       return;
     }
 
-    console.log("supId: ", supId); 
+    console.log("supId: ", "${supplementDetail.supId}");
     // Ajax 요청
     $.ajax({
       url: `/api/supplement/supplementDetail/${supId}/review`,
