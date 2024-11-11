@@ -52,7 +52,7 @@
 
         <!-- 로그인 하지 않은 상태로 메인 이동 -->
         <div>
-        	<a href="<c:url value='/'/>">
+        	<a href="<c:url value='/home'/>">
 				둘러보기
 			</a>
         </div>
