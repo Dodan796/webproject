@@ -19,13 +19,16 @@
 <!-- 찜목록 추가, 장바구니 추가 -->
 <script src="<c:url value='/js/addWish.js'/>"></script>
 <script src="<c:url value='/js/addCartSupDetail.js'/>"></script>
+<link rel="stylesheet" type="text/css"
+	href="<c:url value='/css/supplementDetail.css'/>">
+<c:import url="/WEB-INF/views/layout/head.jsp" />
+
+<!-- 1110 테스트 출력 : jsp 에서 세션아이디값을 지정해놓고 테스트 출력  -->
 <script>
     const userId = "${sessionScope.sid}"; // 서버 세션에서 가져온 userId를 JavaScript 변수에 저장
     console.log("JSP User ID from session:", userId); // 콘솔에 userId 출력
 </script>
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/css/supplementDetail.css'/>">
-<c:import url="/WEB-INF/views/layout/head.jsp" />
+
 </head>
 <body>
 	<div id="supplementDetail"
@@ -277,8 +280,7 @@
 									<a href="#" class="deleteReview" data-review-id="${review.userId}">리뷰삭제</a>
 					    		</c:if>
 							</td> --%>
-							<!-- 리뷰삭제 수정된 부분 -->
-
+							<!-- 리뷰삭제 수정된 부분 --> 
 							<!-- 삭제 버튼 style="display:inline;" 제거 class="deleteReview" 추가 -->
 							<td colspan="2">
 								<!-- 수정 삭제 버튼 한 칸에/ 순서 변경--> <c:if
@@ -402,4 +404,3 @@
 		<c:import url="/WEB-INF/views/layout/footer.jsp" />
 	</div>
 </body>
-</html>

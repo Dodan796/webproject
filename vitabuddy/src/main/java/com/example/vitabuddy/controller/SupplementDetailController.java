@@ -41,9 +41,9 @@ public class SupplementDetailController {
         } else {
             model.addAttribute("supImgBase64", "");
         }
-        
+
         List<ReviewVO> reviews = reviewService.pagingReviewList(supplementDetailId, page);
-        model.addAttribute("reviewList", reviews);
+        model.addAttribute("reviewList", reviews); 
 
         int totalReviews = reviewService.countReviews(supplementDetailId);
         int totalPages = (int) Math.ceil((double) totalReviews / reviewService.getReviewsPerPage());
@@ -51,12 +51,19 @@ public class SupplementDetailController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("supplementDetail", supplementDetail);
-
-       // 상위 2개 해시태그 출력
- 		List<ReviewVO> topHashtags = reviewService.getHashtagsByReview(supplementDetailId);
- 		model.addAttribute("topHashtags", topHashtags);
         
+        //jsp 리뷰 데이터 테스트 출력
+        for (Object review : reviews) {
+            System.out.println("jsp리뷰 데이터 테스트 출력입니다" + review);
+        }
+        
+        //상위 2개 해시태그 출력
+        List<ReviewVO> topHashtags = reviewService.getHashtagsByReview(supplementDetailId);
+        model.addAttribute("topHashtags", topHashtags); 
+        
+
         return "supplement/supplementDetail"; 
+        
     }
 
     @GetMapping("/supplementDetail/{id}/reviews")
@@ -73,8 +80,14 @@ public class SupplementDetailController {
         response.put("reviewList", reviews);
         response.put("currentPage", page);
         response.put("totalPages", totalPages);
+        
+        //1109 테스트 코드 - 서비스 계층에서 review 데이터가 잘 넘어왔는지?
+        for (Object review : reviews) { 
+            System.out.println("리뷰 데이터 테스트 출력입니다" + review);
+        }
 
         return response;
     }
+
 
 }
