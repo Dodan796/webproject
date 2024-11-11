@@ -1,9 +1,10 @@
-/* ì „ì²´ ìŠ¤íƒ€ì¼ */
+/* ÀüÃ¼ ½ºÅ¸ÀÏ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'myriad';
+    font-size: 1.0em;
 }
 
 #wrap {
@@ -19,10 +20,8 @@ a{
 	text-decoration: none;
 }
 
-/* ë²„íŠ¼ íƒœê·¸ ê¸°ë³¸ css ì œê±° */
+/* ¹öÆ° ÅÂ±× ±âº» css Á¦°Å */
 button{
-	max-width: 150px;
-	font-family: inherit;
 	cursor: pointer;
 	text-decoration: none;
 	border: none;
@@ -33,7 +32,7 @@ button{
 }
 
 
-/* ì¸íŠ¸ë¡œ ì´ë¯¸ì§€ */
+/* ÀÎÆ®·Î ÀÌ¹ÌÁö */
 .introTitle img {
     opacity: 50%;
     position: absolute;
@@ -45,18 +44,18 @@ button{
     z-index: 1;
 }
 
-/* ë©”ì¸ íƒ€ì´í‹€ */
+/* ¸ŞÀÎ Å¸ÀÌÆ² */
 .main-title {
     position: relative;
     z-index: 2;
     color: #583b1f;
-    /* ê¸€ì í¬ê¸° ì¡°ì • */
-    font-size: 4.3vw; /* ë„ˆë¹„ì— ë”°ë¼ ê¸€ì í¬ê¸° ì¡°ì • */
+    /* ±ÛÀÚ Å©±â Á¶Á¤ */
+    font-size: 4.3vw; /* ³Êºñ¿¡ µû¶ó ±ÛÀÚ Å©±â Á¶Á¤ */
     font-weight: 800;
-    /* ì œëª© ê¸€ì ìš°ì¸¡ ì •ë ¬ */
+    /* Á¦¸ñ ±ÛÀÚ ¿ìÃø Á¤·Ä */
     text-align: right;
     margin-top: 5vh;
-    /* padding ìˆ˜ì • */
+    /* padding ¼öÁ¤ */
     padding: 0 5%; 
     line-height: 1.2; 
 }
@@ -69,29 +68,28 @@ section div {
     align-items: center;
 }
 
-/* ë¼ë²¨ ì™¼ìª½ ì •ë ¬ */
+/* ¶óº§ ¿ŞÂÊ Á¤·Ä */
 label {
     display: block;
     text-align: left; 
-    margin-bottom: 5px; 
 }
 
-/* input í•„ë“œ ì¤‘ì•™ ì •ë ¬ */
+/* input ÇÊµå Áß¾Ó Á¤·Ä */
 .loginForm input.formTxt {
     display: block;
-    margin: 0 auto; /* ì¤‘ì•™ ì •ë ¬ */
+    margin: 0 auto; /* Áß¾Ó Á¤·Ä */
     width: 100%; 
     max-width: 600px; 
     padding: 10px;
+    padding-left: 20px;
     border-radius: 30px;
-    font-size: 15px;
     border: none;
     line-height: 30px;
     color: #583b1f;
     background-color: #f2f2f2; 
 }
 
-/* ë¡œê·¸ì¸ í¼ ì¤‘ì•™ ì •ë ¬ */
+/* ·Î±×ÀÎ Æû Áß¾Ó Á¤·Ä */
 .loginForm {
     width: 100%; 
     max-width: 500px; 
@@ -103,11 +101,10 @@ label {
     margin-bottom:20px;
 }
 
-/* ë¡œê·¸ì¸ ë²„íŠ¼ ì¤‘ì•™ ì •ë ¬ */
+/* ·Î±×ÀÎ ¹öÆ° Áß¾Ó Á¤·Ä */
 .loginForm #loginSubmit {
-    width: 100px;
+    width: 150px;
     height: 40px;
-    padding: 10px;
     display: block;
     float: right;
 }
@@ -115,16 +112,13 @@ label {
 
 .btn {
     margin-top: 10px;
-    max-width: 150px;
+	width: 200px;
     height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 15px;
-    font-weight: 300;
     cursor: pointer;
     border-radius: 25px;
-    margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -136,33 +130,28 @@ label {
 }
 
 
-.btnUnfilled {
-    background-color: #e5e0da;
-    color: #583b1f;
-    border: solid 1.5px #583b1f;
-}
-
-/* ë²„íŠ¼ hover */
+/* ¹öÆ° hover */
 .btnFilled:hover {
     background-color: #71543d;
     transition: background-color 0.3s ease;
 }
 
-/* í™”ë©´ í¬ê¸° ì¡°ì •ì‹œ ê¸€ìí¬ê¸° */
+/* È­¸é Å©±â Á¶Á¤½Ã ±ÛÀÚÅ©±â */
 @media (max-width: 768px) {
     .main-title {
-        font-size: 8vw; /* ì‘ì€ í™”ë©´ */
+        font-size: 8vw; /* ÀÛÀº È­¸é */
     }
 }
 
 @media (max-width: 480px) {
     .main-title {
-        font-size: 6vw; /* ë” ì‘ì€ í™”ë©´ */
+        font-size: 6vw; /* ´õ ÀÛÀº È­¸é */
     }
 }
-section {/* ì„¹ì…˜ í™”ë©´ ìš°ì¸¡ ì´ë™ */
+
+section {/* ¼½¼Ç È­¸é ¿ìÃø ÀÌµ¿ */
 	width: 70%;
     position: relative;
-    left: 30%; /* í™”ë©´ì˜ 30%ì—ì„œ ì‹œì‘ */
+    left: 30%; /* È­¸éÀÇ 30%¿¡¼­ ½ÃÀÛ */
     text-align: center; 
 }

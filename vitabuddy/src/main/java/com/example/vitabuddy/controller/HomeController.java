@@ -20,7 +20,7 @@ public class HomeController {
 	}
 
 	// 2. 메인홈페이지.
-	@RequestMapping("/home")
+	@RequestMapping("/")
     public String home(Model model) {
         // 브랜드별 상위 1개의 상품을 가져옴
 		//기능별, 성분별 상위 상품 추가

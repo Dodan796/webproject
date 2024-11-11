@@ -23,6 +23,12 @@
                 <h1>마이페이지</h1>
             </div>
             <div class="box">
+            	<div class="tooltip-container">
+				  <span class="tooltip-icon"><i class="fa-solid fa-circle-question"></i></span>
+				  <div class="tooltip-text">비타버디에서 판매 중인 상품들의 주성분을 기준으로 좋은 시너지가 나는 영양제 성분을 추천해주는 동시에 안전한 복용법을 지도합니다. <br>
+				  <strong>-마이페이지에서 추천 성분과 주의사항을 확인하려면?</strong><br>
+						회원 정보 수정 페이지에서 현재 복용 중인 영양제를 추가해 보세요. 추가된 영양제를 바탕으로 시너지를 내는 추천 성분과 상호작용, 주의사항을 마이페이지에서 확인하실 수 있습니다.</div>
+				</div>
                 <p>복용 중인 영양제</p>
                 <div class="mySupplement">
                     <c:forEach var="supplement" items="${userSupplements}" varStatus="status">
@@ -44,8 +50,8 @@
                                             <c:forEach var="recommendVO" items="${entry.value}">
                                                 <b>추천 성분</b>: ${recommendVO.ingredients} <br>
                                                 <b>영양제 궁합</b>: ${recommendVO.interactionRecommend} <br>
-                                                
-                                                
+
+
                                                 <%-- <c:if test="${topProductsByIngredient[recommendVO.ingredientId] != null}">
                                         <a href="/supplement/supplementDetail/${topProductsByIngredient[recommendVO.ingredientId].supId}">
                                             ${topProductsByIngredient[recommendVO.ingredientId].supName}
@@ -53,11 +59,12 @@
                                     </c:if> --%>
                                                 <!-- 추천 성분에 따른 상위 제품 링크 추가 -->
                                     <c:if test="${topProductsByIngredient != null}">
-                                    
+
                                     <c:forEach var="topPrd" items="${topProductsByIngredient}">
                                        <a href="<c:url value='/api/supplement/supplementDetail/${topPrd.value.supId}'/>">
                                          ${topPrd.value.supName}
                                          </a>
+                                         <br>
                                     </c:forEach>
                                     </c:if>
                                                 <br><br>
@@ -140,18 +147,18 @@
                     <!-- 구매 내역 : 10/25 myPage 구매내역 부분 수정 -->
   					<div class="purchase-section">
                         <h3>구매 내역</h3>
-                         
+
                         <!-- 10/29 수정 -->
                         <div class="filter-bar">
 					        <label for="order">정렬 기준:</label>
-					        
+
 					        <div class="right-options">
 						        <div class="filter-options">
 						            <label><input type="radio" name="dateRange" value="1month" onclick="showPurchases('recentPurchases')"> 1개월 전</label>
 						            <label><input type="radio" name="dateRange" value="1to3months" onclick="showPurchases('midTermPurchases')"> 1~3개월 전</label>
 						            <label><input type="radio" name="dateRange" value="3months" onclick="showPurchases('oldPurchases')"> 3개월 전</label>
 						        </div>
-						        
+
 						        <select name="order">
 						            <option>현재 주문 처리 상태</option>
 						            <option>주문 완료</option>
@@ -174,7 +181,7 @@
                                     <th>주문 처리</th>
                                 </tr>
                             </thead>
-                            
+
                             	<!-- 1개월 전 구매내역 -->
                                 <tbody id="recentPurchases" >
 							        <c:choose>
@@ -195,7 +202,7 @@
 							            </c:otherwise>
 							        </c:choose>
 							    </tbody>
-							
+
 							    <!-- 중기 구매 (1~3개월) -->
 							    <tbody id="midTermPurchases" style="display:none;"> 
 							        <c:choose>
@@ -216,7 +223,7 @@
 							            </c:otherwise>
 							        </c:choose>
 							    </tbody>
-							
+
 							    <!-- 오래된 구매 (3개월 이상) -->
 							    <tbody id="oldPurchases" style="display:none;">
 							        <c:choose>
@@ -242,8 +249,8 @@
 
 
 
-                            
-                            
+
+
                         </table>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <script src="https://kit.fontawesome.com/567f0760c2.js" crossorigin="anonymous"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <title>비타버디 가입하기</title>
+    <title>회원가입</title>
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/register.css'/>">
     <script src="<c:url value='/js/register.js'/>"></script> <!-- JS 파일을 추가 -->
     <c:import url="/WEB-INF/views/layout/head.jsp"/>
@@ -45,9 +45,9 @@
                     <input type="password" name="confirmPwd" id="confirmPwd" oninput="pwCheck()" required/><br>
                 </div>
                 <p id="pwOk"></p>
-                
+
                 <div class="box_rowContents">
-                    
+
                         <label>전화번호</label>
                         <div class="phone-number">
                         <input type="tel" name="userPh1" id="userPh1" placeholder="010" maxlength="3" required/>
@@ -91,3 +91,4 @@
 <c:import url="/WEB-INF/views/layout/footer.jsp"/>
 
 </body>
+</html>

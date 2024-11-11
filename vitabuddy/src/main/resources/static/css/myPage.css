@@ -19,8 +19,7 @@ body {
     height: 100%;
 }
 
-.box p, 
-.box_rowContents p {
+p {
     margin-left: 10px;
     font-size: 1.2em;
 }
@@ -203,6 +202,7 @@ h4 {
 .recommendList a{
 	color: #583b1f;
 }
+
 h3 {
     font-size: 1.5em;
 }
@@ -249,4 +249,43 @@ li{
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+}
+
+/* 가이드 */
+.tooltip-container {
+    /* display: inline;  *//* 같은 줄에 위치 */
+    position: relative;
+    display: block;
+    margin-left: 5px; /* 텍스트와 아이콘 간격 */
+    float: right;
+}
+.tooltip-icon {
+    font-size: 16px; /* 아이콘 크기 조절 */
+    float: right;
+}
+.tooltip-text {
+    visibility: hidden;
+    width: 70vw;
+    background-color: #f7f4ef;
+    color: #583b1f;
+    padding: 15px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+    text-align: left;
+    height: auto;
+    /* line-height: 1.5; */
+}
+.tooltip-icon:hover + .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
+.horizontal_box p{
+	margin-top: 0;
 }
