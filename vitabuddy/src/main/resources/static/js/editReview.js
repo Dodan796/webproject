@@ -19,10 +19,10 @@ $(document).ready(function () {
     }
     
 	//2. 해시태그
-    if (!$("#hashtag").val()) {
-      alert("해시태그를 선택해 주세요.");
-      return;
-    }
+    //if (!$("#hashtag").val()) {
+      //alert("해시태그를 선택해 주세요.");
+      //return;
+    //}
 
 	//3. 복용기간
     const startDate = $("#date1").val();
