@@ -1,6 +1,7 @@
 /*
 * pagination 코드
 */
+
 function goToPage(page) {
     const supplementId = $('#supplementDetail').data('supplement-id');
     
@@ -67,7 +68,7 @@ function goToPage(page) {
             // 페이지 번호 업데이트
             $('.page').removeClass('active');
             $(`.page[data-page=${page}]`).addClass('active');
-
+            
             // 이전/다음 버튼 활성화 또는 비활성화
             $('.prev').toggleClass('disabled', page <= 1).data('page', page - 1);
             $('.next').toggleClass('disabled', page >= response.totalPages).data('page', page + 1);
