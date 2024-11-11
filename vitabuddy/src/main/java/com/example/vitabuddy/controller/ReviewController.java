@@ -24,17 +24,18 @@ import java.util.UUID;
 public class ReviewController {
 
     @Autowired
-    private IReviewService reviewService;   
+    private IReviewService reviewService;
     
     @Autowired
 	private SupplementDetailService supplementDetailService;
 
     // 파일이 저장될 경로
-    //private static final String UPLOAD_DIR = "C:/Review_Upload/"; 
+   // private static final String UPLOAD_DIR = "C:/Review_Upload/"; 
     
-    //업로드 서버경로
+  //업로드 서버경로
     String UPLOAD_DIR = "/usr/local/project/upload/";
-    
+
+
     // 1. 리뷰 작성
     @PostMapping("/supplementDetail/{supId}/review")
     public String insertReview(@PathVariable("supId") int supId,

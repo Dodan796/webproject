@@ -19,6 +19,10 @@
 <!-- 찜목록 추가, 장바구니 추가 -->
 <script src="<c:url value='/js/addWish.js'/>"></script>
 <script src="<c:url value='/js/addCartSupDetail.js'/>"></script>
+<script>
+    const userId = "${sessionScope.sid}"; // 서버 세션에서 가져온 userId를 JavaScript 변수에 저장
+    console.log("JSP User ID from session:", userId); // 콘솔에 userId 출력
+</script>
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/css/supplementDetail.css'/>">
 <c:import url="/WEB-INF/views/layout/head.jsp" />
@@ -323,7 +327,7 @@
 							<td colspan="3">복용기간: <fmt:formatDate
 									value="${review.startDate}" pattern="yyyy-MM-dd" /> ~ <fmt:formatDate
 									value="${review.endDate}" pattern="yyyy-MM-dd" /></td>
-							<td colspan="2">해시태그: ${review.reviewHashtag}</td>
+							<td  colspan="2">해시태그: ${review.reviewHashtag}</td>
 							<td>
 								<div class="rate">
 									<c:forEach var="i" begin="1" end="5">
@@ -398,4 +402,3 @@
 		<c:import url="/WEB-INF/views/layout/footer.jsp" />
 	</div>
 </body>
-</html>

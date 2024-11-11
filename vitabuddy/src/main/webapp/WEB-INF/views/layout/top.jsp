@@ -7,7 +7,7 @@
             <a href="<c:url value='/home'/>"><img src="<c:url value='/image/logo.png'/>" id="logoImg"  width="240" height="80"></a>
             <%-- <a href="<c:url value='/home'/>">VITABUDDY</a> --%>
         </div>
-		<div id="topMenu">
+		<div id="topMenu">			
 			<!-- 로그인 및 회원가입 -->
 			<c:if test="${empty sessionScope.sid}">
 				<a href="<c:url value='/intro'/>">로그인</a>
@@ -17,7 +17,7 @@
 			<c:if test="${not empty sessionScope.sid}">
 				<a href="<c:url value='/member/logout'/>">로그아웃</a>
 				<a href="<c:url value='/supplement/wishList'/>"><i
-					class="fa-solid fa-heart"></i></a>
+					class="fas fa-solid fa-heart"></i></a>
 				<a href="<c:url value='/supplement/cartList'/>"><i
 					class="fa-solid fa-cart-shopping"></i></a>
 				<a href="<c:url value='/member/myPage'/>"><i

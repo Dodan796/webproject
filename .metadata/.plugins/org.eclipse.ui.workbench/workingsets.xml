@@ -5,4 +5,5 @@
 <workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1730955375164_2" label="vitabuddy" name="vitabuddy">
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/vitabuddy" type="4"/>
 </workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1731156483678_3" label="Window Working Set" name="Aggregate for window 1730956238636"/>
 </workingSetManager>
