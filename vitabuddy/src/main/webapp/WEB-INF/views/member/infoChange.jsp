@@ -7,7 +7,7 @@
     <head>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="<c:url value='/js/infoChange.js'/>"></script>  <!-- infoChange.js 스크립트 삽입 -->
-        <script src="<c:url value='/js/memberChangecheck.js'/>"></script>  <!-- memberChangecheck (이메일, 비번 정합성 검사) 스크립트 삽입 -->
+        <script src="<c:url value='/js/memberChangeCheck.js'/>"></script>  <!-- memberChangecheck (이메일, 비번 정합성 검사) 스크립트 삽입 -->
         <script src="<c:url value='/js/searchZip.js'/>"></script> <!-- searchZip.js 우편번호 찾기 스크립트 삽입 -->
         <script src="https://kit.fontawesome.com/567f0760c2.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -5,7 +5,6 @@
 	font-family: myriad;
 	box-sizing: border-box;	
 	font-size: 1.0em;
-	color: #583b1f;
 }
 
 #wrap {
@@ -98,6 +97,6 @@ section p {
 .btnUnfilled:hover {
 	background-color: #71543d;
 	color: white;
-	border: solid 1.5px #583b1f;
+	border: solid 1.5px #71543d;
 	transition: background-color 0.3s ease;
 }

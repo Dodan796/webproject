@@ -67,7 +67,8 @@
 					    </c:choose>
 					</tbody>
                     </table>
-                    
+                    </div>
+                    </section>
         <!-- footer -->
         <c:import url="/WEB-INF/views/layout/footer.jsp" />
     </div>
