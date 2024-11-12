@@ -46,7 +46,7 @@
            <!-- 회원가입 -->
         <div>   
             <p>아직 회원이 아니신가요?</p>
-            <a href="<c:url value='/joinForm'/>" class="btn btnFilled">
+            <a href="<c:url value='/member/register'/>" class="btn btnFilled">
 				회원가입
 			</a>
         </div>
