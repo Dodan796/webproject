@@ -82,7 +82,7 @@ table{
 	/* 이미지 테두리 추가 */
 	/* border: 0.1em solid #7e7b46; */
 	border: 0.01em #7e7b46;
-	box-shadow: 0 0 5px #7e7b46;
+	/* box-shadow: 0 0 5px #7e7b46; */
 }
 
 .rating {
