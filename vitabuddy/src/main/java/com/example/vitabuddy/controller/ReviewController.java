@@ -76,10 +76,11 @@ public class ReviewController {
                 MultipartFile file = reviewImgFiles.get(i);  //이미지 처리 
                 
                 if (!file.isEmpty()) {
-                    String originalFilename = file.getOriginalFilename();                   
+                    String originalFilename = file.getOriginalFilename();
+                    String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
                     String baseName = originalFilename.substring(0, originalFilename.lastIndexOf("."));
                     String timestamp = String.valueOf(System.currentTimeMillis());
-                    String uniqueFileName = baseName + "_" + timestamp; 
+                    String uniqueFileName = baseName + "_" + timestamp + extension; 
 
                     try {
                         File destFile = new File(UPLOAD_DIR + uniqueFileName);

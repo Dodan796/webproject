@@ -575,3 +575,6 @@
 2024-11-13 08:52:31,757 [Worker-47: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-11-13 08:52:31,795 [Worker-47: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 86 resources from src\main\resources to target\classes
 2024-11-13 08:52:31,835 [Worker-47: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\webservice\vitabuddy\src\test\resources
+2024-11-13 08:55:18,630 [Worker-51: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-11-13 08:55:18,695 [Worker-51: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 86 resources from src\main\resources to target\classes
+2024-11-13 08:55:18,735 [Worker-51: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\webservice\vitabuddy\src\test\resources
