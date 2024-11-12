@@ -22,7 +22,7 @@ img {
     border: 0;
     margin: 0;
 }
-.bestItem img:hover {
+.bestItems img:hover {
     transform: scale(1.05); /* 이미지를 약간 확대 */
     transition: transform 0.3s ease; /* 애니메이션 부드럽게 */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가로 강조 */
@@ -142,7 +142,7 @@ h1 {
 
 .prdImg {
     margin-bottom: 10px;
-    border: 0.1em solid #7e7b46;
+    box-shadow: 0 0 7px #7e7b46;
 }
 
 .bestItem p {

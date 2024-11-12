@@ -65,7 +65,7 @@ h1 {
 .supImg {
     width: 150px;
     height: 150px;
-    border: 1px solid #7e7b46;
+    box-shadow: 0 0 7px #7e7b46;
 }
 
 /* 버튼 아이콘 */

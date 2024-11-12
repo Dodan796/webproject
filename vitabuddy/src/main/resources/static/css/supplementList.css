@@ -105,7 +105,7 @@ h1{
     height: auto;
     object-fit: cover;
     /* 테두리 추가*/
-    border: 0.1em solid #7e7b46;  /* 테두리 두꼐 수정 */
+    box-shadow: 0 0 7px #7e7b46;  /* 테두리 두꼐 수정 */
 }
 
 .productItem p {
