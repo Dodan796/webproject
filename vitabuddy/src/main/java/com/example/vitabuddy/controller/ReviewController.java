@@ -33,7 +33,7 @@ public class ReviewController {
     //private static final String UPLOAD_DIR = "C:/Review_Upload/"; 
 
     //업로드 서버경로
-    String UPLOAD_DIR = "/usr/local/project/upload/";
+    String UPLOAD_DIR = "C:/Review_Upload/"; 
 
     // 1. 리뷰 작성
     @PostMapping("/supplementDetail/{supId}/review")
