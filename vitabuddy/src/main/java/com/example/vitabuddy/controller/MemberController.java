@@ -54,7 +54,7 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
     
-    @GetMapping("/login")
+    @GetMapping("/api/login")
     public String showLoginPage() {
         return "intro"; // /WEB-INF/views/member/intro.jsp로 이동
     }
