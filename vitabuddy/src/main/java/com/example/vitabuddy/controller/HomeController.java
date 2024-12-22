@@ -19,7 +19,7 @@ public class HomeController {
 		return "intro";
 	}
 
-	// 2. 메인홈페이지.
+	// 2. 메인홈페이지. => 회원용
 	@RequestMapping("/")
     public String home(Model model) {
         // 브랜드별 상위 1개의 상품을 가져옴
@@ -34,7 +34,13 @@ public class HomeController {
         model.addAttribute("topSupplementsIngredient", topSupplementsByIngredient);
         return "home";
     }
-    
+
+    //3.메인페이지 => 관리자용
+    @RequestMapping("/admin")
+    public String adminHome(){
+        return "adminHome";
+    }
+
     // 10/26 이미지 출력 - IReviewService 의존성 주입
     @Autowired
     private IReviewService reviewService;

@@ -9,7 +9,8 @@
 
 <c:import url="/WEB-INF/views/layout/head.jsp" />	
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/intro.css'/>">
-<script src="<c:url value='/js/login.js'/>"></script>
+<script src="<c:url value='/js/login.js'/>" defer></script>
+
 </head>
 <body>
 <div id="wrap">
@@ -27,7 +28,7 @@
 		</h1>
         <!-- 로그인 폼 -->
         <div class="loginForm">
-            <form>
+            <form id="loginForm">
                 <label for="id">아이디</label>
                 <br>
                 <input type="text" id="id" name="id" class="formTxt" placeholder="아이디" required>
@@ -39,6 +40,7 @@
                 <button type="submit" id="loginSubmit" class="btn btnFilled">로그인</button>
             </form>
         </div>
+
 	</section>
 
 <br>
