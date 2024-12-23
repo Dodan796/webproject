@@ -1,8 +1,11 @@
 package com.example.vitabuddy.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.vitabuddy.dto.KakaoDTO;
+import com.example.vitabuddy.model.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
+
 
     // GET 요청으로 JSP 페이지를 로드할 수 있도록 설정
     @GetMapping("/register")
@@ -54,9 +58,14 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
     
-    @GetMapping("/api/login")
+    @GetMapping("/login")
     public String showLoginPage() {
         return "intro"; // /WEB-INF/views/member/intro.jsp로 이동
     }
+
+
+
+
+
 
 }

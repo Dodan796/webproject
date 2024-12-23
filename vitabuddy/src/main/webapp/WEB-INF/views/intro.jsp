@@ -10,6 +10,8 @@
 <c:import url="/WEB-INF/views/layout/head.jsp" />	
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/intro.css'/>">
 <script src="<c:url value='/js/login.js'/>"></script>
+<script src="<c:url value='/js/kakaoOAuth.js'/>"></script>
+
 </head>
 <body>
 <div id="wrap">
@@ -38,6 +40,13 @@
                 <br>
                 <button type="submit" id="loginSubmit" class="btn btnFilled">로그인</button>
             </form>
+        </div>
+
+        <div class="kakaoLogin">  <!-- get 방식으로 client_id와 redirect_url 카카오로 요청 -> 인가 코드 받아오기-->
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=d04c3a1dba697423aa56a189f1e5f65b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code">
+                <img src="<c:url value='/image/kakao_login_small.png'/>" id="kakaologoImg">
+            </a>
+
         </div>
 	</section>
 

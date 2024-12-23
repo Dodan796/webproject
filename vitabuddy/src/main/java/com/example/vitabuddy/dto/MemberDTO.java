@@ -1,5 +1,8 @@
 package com.example.vitabuddy.dto;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MemberDTO {
 	private String userId;
 	private String userName;
@@ -58,7 +61,7 @@ public class MemberDTO {
 	public void setUserAddress2(String userAddress2) {
 		this.userAddress2 = userAddress2;
 	}
-	
+
 	
 	
 }

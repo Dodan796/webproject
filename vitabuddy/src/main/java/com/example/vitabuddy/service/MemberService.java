@@ -1,5 +1,9 @@
 package com.example.vitabuddy.service;
 
+import com.example.vitabuddy.dto.KakaoDTO;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -7,6 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.vitabuddy.dao.MemberDAO;
 import com.example.vitabuddy.dto.MemberDTO;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.HashMap;
 
 @Service
 public class MemberService {
@@ -38,4 +49,8 @@ public class MemberService {
     public MemberDTO getUserInfo(String userId) {
         return memberDAO.getUserById(userId); // MemberDAO에서 회원 정보 가져오기
     }
+
+
+
+
 }

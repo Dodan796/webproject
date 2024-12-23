@@ -32,4 +32,9 @@ public class LoginController {
         session.invalidate(); // 세션 무효화
         return "redirect:/intro"; // 로그아웃 후 intro 화면으로 이동
     }
+
+
+
+
+
 }
