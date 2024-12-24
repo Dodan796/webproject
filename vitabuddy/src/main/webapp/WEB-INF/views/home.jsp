@@ -48,7 +48,7 @@
 		<a href="<c:url value='/member/myPage'/>"><img src="<c:url value='/image/myPage.png'/>" class="menuImg"><br>마이페이지</a>
 		</c:if>
 	</div>
-</section>	
+</section>
 <br><br>
 <section class="home item">
     <h2>인기상품</h2>
