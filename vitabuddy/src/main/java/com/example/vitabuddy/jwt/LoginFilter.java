@@ -1,10 +1,13 @@
 package com.example.vitabuddy.jwt;
 
-import com.example.vitabuddy.dto.UserInfo;
+import com.example.vitabuddy.model.RefreshVO;
+import com.example.vitabuddy.service.RefreshService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,7 +16,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -25,10 +30,42 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     // JWT token 주입
     private final JWTUtil jwtUtil;
 
+    // Refresh VO & RefreshService 필드선언
+    private RefreshService refreshService;
+
+
+
     // LoginFilter에 주입
-    public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
+    public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, RefreshService refreshService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
+        this.refreshService = refreshService;
+    }
+
+    // cookie 생성 메서드
+    private Cookie createCookie(String key, String value) {
+
+        Cookie cookie = new Cookie(key, value);
+        cookie.setMaxAge(24*60*60);
+        //cookie.setSecure(true);
+        //cookie.setPath("/");
+        cookie.setHttpOnly(true);
+
+        return cookie;
+    }
+
+    // Refresh 메서드 추가
+    private void addRefresh(String userId, String refreshToken, Long expiration){
+        Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis() + expiration);
+
+        RefreshVO refreshVO = new RefreshVO();
+        refreshVO.setUserId(userId);
+        refreshVO.setRefreshToken(refreshToken);
+        refreshVO.setExpiration(timestamp);
+
+        // MyBatis를 통해 데이터베이스에 저장
+        refreshService.saveRefreshToken(refreshVO);
+
     }
 
     @Override
@@ -59,17 +96,26 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
 
-        UserInfo info = (UserInfo) authentication.getPrincipal();
+        //회원 정보
+        String userId = authentication.getName();
 
-        String userId = info.getUsername();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
-
         String userRole = auth.getAuthority();
-        String token = jwtUtil.createJwt(userId, userRole, 60 * 60 * 24L);
 
-        response.addHeader("Authorization", "Bearer " + token);
+        // 토큰생성
+        String access = jwtUtil.createJwt("access", userId, userRole, 600000L);
+        String refresh = jwtUtil.createJwt("refresh", userId, userRole, 86400000L);
+
+        // Refresh 토큰 저장로직
+        addRefresh(userId, refresh, 86400000L);
+
+        //응답설정
+        response.setHeader("access",access);
+        response.addCookie(createCookie("refresh",refresh));
+        response.setStatus(HttpStatus.OK.value());
+
     }
 
     // 로그인 실패 시 실행하는 메서드

@@ -2,6 +2,7 @@ package com.example.vitabuddy.jwt;
 
 import com.example.vitabuddy.dto.MemberDTO;
 import com.example.vitabuddy.dto.UserInfo;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class JWTFilter extends OncePerRequestFilter {
 
@@ -25,49 +27,56 @@ public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        //1. request에서 Authorization 헤더를 찾음
-        String authorization = request.getHeader("Authorization");
+        //1. Header에서 access키에 담긴 token을 꺼낸다
+        String accessToken = request.getHeader("access");
 
-        //Authorization 헤더 검증
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-
-            System.out.println("token null");
+        //2. token이 없으면 다음 필터로 넘긴다.
+        if (accessToken == null) {
             filterChain.doFilter(request, response);
-
-            //조건이 해당되면 메소드 종료 (필수)
             return;
         }
 
-        String token = authorization.split(" ")[1];
+        //3. 토큰의 만료 여부를 확인, 만료시 다음 필터로 넘기지 않는다
+        try {
+            jwtUtil.isExpired(accessToken);
+        } catch (ExpiredJwtException e) {
 
-        //토큰 소멸 시간 검증
-        if(jwtUtil.isExpired(token)){
-            System.out.println("token expired");
-            filterChain.doFilter(request,response);
+            //response body
+            PrintWriter writer = response.getWriter();
+            writer.print("access token expired");
 
+            //response status code
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
-        //token에서 userId, userRole를 가져온다
-        String userId = jwtUtil.getUserId(token);
-        String userRole = jwtUtil.getUserRole(token);
+        //4. 토큰이 access인지 확인(발급시 Payload에 명시한다)
+        String category = jwtUtil.getCategory(accessToken);
+        if (!category.equals("access")) {
+            //response body
+            PrintWriter writer = response.getWriter();
+            writer.print("invalid access token");
 
-        //MemberDTO를 생성하여 값을 set
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setUserId(userId);
-        memberDTO.setUserPwd("temppassword");
-        memberDTO.setUserRole(userRole);
+            //response status code
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
 
-        //UserInfo에 회원정보 객체를 담는다.
-        UserInfo userInfo = new UserInfo(memberDTO);
+        //5. username, userRole 값을 획득
+        String username = jwtUtil.getUserId(accessToken);
+        String userRole = jwtUtil.getUserRole(accessToken);
 
-        //Spring Security 인증 토큰을 생성
+        MemberDTO dto = new MemberDTO();
+        dto.setUserId(username);
+        dto.setUserRole(userRole);
+
+        UserInfo userInfo = new UserInfo(dto);
+
         Authentication authToken = new UsernamePasswordAuthenticationToken(userInfo, null, userInfo.getAuthorities());
-
-        //session에 사용자를 등록
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
+
 
     }
 }
