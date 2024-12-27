@@ -23,13 +23,8 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 @EnableWebSecurity
 public class webSecurityConfig {
 
-    //JWT 토큰 주입
     private final JWTUtil jwtUtil;
-
-    //AuthenticationManager가 인자로 받을 AuthenticationConfiguration 객체 생성자를 주입해준다.
     private final AuthenticationConfiguration authenticationConfiguration;
-
-    //RefreshService 주입
     private final RefreshService refreshService;
 
     public webSecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, RefreshService refreshService) {
@@ -38,13 +33,11 @@ public class webSecurityConfig {
         this.refreshService = refreshService;
     }
 
-    //비밀번호 암호화
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    //AuthenticationManager Bean을 등록한다
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
@@ -52,37 +45,21 @@ public class webSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        //1. csrf disable
         http.csrf((auth) -> auth.disable());
-
-        //2. Form 로그인 방식 disable
         http.formLogin((auth) -> auth.disable());
-
-        //3. 경로별 인가 작업
+        http.logout(logout -> logout.disable()); // 기본 로그아웃 비활성화
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/**","/login").permitAll() //=>
-                .requestMatchers("/admin").hasRole("ADMIN")
-                .requestMatchers("/reissue").permitAll()
+                .requestMatchers("/WEB-INF/views/**").permitAll() // JSP 파일 접근 허용
+                .requestMatchers("/static/**").permitAll() // 정적 리소스 허용
+                .requestMatchers("/css/**", "/js/**", "/image/**").permitAll() // 명시적 허용
+                .requestMatchers("/", "/login","/logout", "/intro","/member/**","/supplement/**").permitAll() // JSP 반환 컨트롤러 허용
+                .requestMatchers("/admin").hasAuthority("ROLE_ADMIN") // 관리자 권한
                 .anyRequest().authenticated());
 
-        //4. 세션설정
-        http.sessionManagement((session) -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        //5. 필터추가
-
-        // 5-1
-        http
-                .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
-
-        // 5-2LoginFilter()는 인자를 받아서 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
-        http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshService), UsernamePasswordAuthenticationFilter.class);
-
-        //6. 로그아웃필터 추가
-        http
-               .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshService), LogoutFilter.class);
+        http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.addFilterBefore(new JWTFilter(jwtUtil,refreshService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshService), LogoutFilter.class);
 
         return http.build();
     }

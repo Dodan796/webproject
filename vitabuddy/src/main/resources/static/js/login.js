@@ -36,3 +36,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+//로그아웃 기능
+document.querySelector('#logoutButton').addEventListener('click', function (event) {
+    event.preventDefault(); // 기본 동작 방지
+
+    fetch('/logout', {
+        method: 'POST',
+        credentials: 'include', // 쿠키 포함
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
+            if (response.ok) {
+                alert('로그아웃 성공!');
+                window.location.href = '/'; // 메인 페이지로 리다이렉트
+            } else {
+                response.text().then((message) => alert('로그아웃 실패: ' + message));
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('로그아웃 요청 중 문제가 발생했습니다.');
+        });
+});
+
+
+
+

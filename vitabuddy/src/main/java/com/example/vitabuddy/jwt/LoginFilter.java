@@ -7,6 +7,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -49,8 +50,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         cookie.setMaxAge(24*60*60);
         //cookie.setSecure(true);
         //cookie.setPath("/");
-        cookie.setHttpOnly(true);
-
         return cookie;
     }
 
@@ -95,8 +94,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     // 로그인 성공 시 실행하는 메서드 (JWT를 발급하는 곳)
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
+        // 세션 무효화
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
 
-        //회원 정보
+        // 회원 정보
         String userId = authentication.getName();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -104,18 +108,22 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         GrantedAuthority auth = iterator.next();
         String userRole = auth.getAuthority();
 
-        // 토큰생성
+        // 토큰 생성
         String access = jwtUtil.createJwt("access", userId, userRole, 600000L);
         String refresh = jwtUtil.createJwt("refresh", userId, userRole, 86400000L);
 
-        // Refresh 토큰 저장로직
+        // Refresh 토큰 저장 로직
         addRefresh(userId, refresh, 86400000L);
 
-        //응답설정
-        response.setHeader("access",access);
-        response.addCookie(createCookie("refresh",refresh));
-        response.setStatus(HttpStatus.OK.value());
+        // 응답 설정
+        response.setHeader("access", access);
+        response.addCookie(createCookie("refresh", refresh));
 
+        // userRole과 userId를 쿠키에 저장
+        response.addCookie(createCookie("userRole", userRole));
+        response.addCookie(createCookie("userId", userId));
+
+        response.setStatus(HttpStatus.OK.value());
     }
 
     // 로그인 실패 시 실행하는 메서드

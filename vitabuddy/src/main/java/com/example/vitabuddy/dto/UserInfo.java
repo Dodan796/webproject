@@ -1,6 +1,5 @@
 package com.example.vitabuddy.dto;
 
-import com.example.vitabuddy.model.MemberVO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,29 +14,18 @@ public class UserInfo implements UserDetails {
         this.dto = dto;
     }
 
-
-    //1. 회원 & 관리자 역할을 받는 메서드
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         Collection<GrantedAuthority> collection = new ArrayList<>();
-        collection.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return dto.getUserRole();
-            }
-        });
-
+        collection.add((GrantedAuthority) () -> dto.getUserRole());
         return collection;
     }
 
-    //2. Pwd를 반환하는 메서드
     @Override
     public String getPassword() {
         return dto.getUserPwd();
     }
 
-    //3. Username를 반환하는 메서드
     @Override
     public String getUsername() {
         return dto.getUserId();
@@ -61,5 +49,13 @@ public class UserInfo implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userId='" + dto.getUserId() + '\'' +
+                ", userRole='" + dto.getUserRole() + '\'' +
+                '}';
     }
 }

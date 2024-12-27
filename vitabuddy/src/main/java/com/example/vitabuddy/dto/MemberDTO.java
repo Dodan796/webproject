@@ -9,7 +9,7 @@ public class MemberDTO {
     private String userId;
     private String userName;
     private String userPwd;
-    private String userRole = "USER";
+    private String userRole="ROLE_USER";
     private String userEmail;
     private String userPh;
     private String userZipcode;

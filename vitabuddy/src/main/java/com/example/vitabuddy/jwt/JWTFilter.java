@@ -2,81 +2,105 @@ package com.example.vitabuddy.jwt;
 
 import com.example.vitabuddy.dto.MemberDTO;
 import com.example.vitabuddy.dto.UserInfo;
+import com.example.vitabuddy.service.RefreshService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+@Slf4j
 public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
+    private final RefreshService refreshService;
 
-    public JWTFilter(JWTUtil jwtUtil) {
+    public JWTFilter(JWTUtil jwtUtil, RefreshService refreshService) {
         this.jwtUtil = jwtUtil;
+        this.refreshService = refreshService;
     }
 
-
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
-        //1. Header에서 access키에 담긴 token을 꺼낸다
         String accessToken = request.getHeader("access");
+        String refreshToken = null;
 
-        //2. token이 없으면 다음 필터로 넘긴다.
-        if (accessToken == null) {
-            filterChain.doFilter(request, response);
-            return;
+        // Refresh 토큰 쿠키에서 가져오기
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("refresh".equals(cookie.getName())) {
+                    refreshToken = cookie.getValue();
+                }
+            }
         }
 
-        //3. 토큰의 만료 여부를 확인, 만료시 다음 필터로 넘기지 않는다
         try {
-            jwtUtil.isExpired(accessToken);
-        } catch (ExpiredJwtException e) {
+            // Access 토큰 유효성 검증
+            if (accessToken != null) {
+                jwtUtil.isExpired(accessToken);
+                // 인증 로직 처리
+                String userId = jwtUtil.getUserId(accessToken);
+                String userRole = jwtUtil.getUserRole(accessToken);
+                setAuthentication(userId, userRole);
+                filterChain.doFilter(request, response);
+                return;
+            }
 
-            //response body
-            PrintWriter writer = response.getWriter();
-            writer.print("access token expired");
+            // Access 토큰이 만료된 경우 Refresh 토큰으로 재발급
+            if (refreshToken != null) {
+                jwtUtil.isExpired(refreshToken); // Refresh 토큰 유효성 검증
+                if (!refreshService.existsByRefresh(refreshToken)) {
+                    throw new IllegalArgumentException("Refresh token invalid");
+                }
 
-            //response status code
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
+                String userId = jwtUtil.getUserId(refreshToken);
+                String userRole = jwtUtil.getUserRole(refreshToken);
+
+                // 새 Access 토큰 발급
+                String newAccessToken = jwtUtil.createJwt("access", userId, userRole, 600000L);
+                response.setHeader("access", newAccessToken);
+                setAuthentication(userId, userRole);
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            // Access 및 Refresh 토큰 모두 없는 경우
+            filterChain.doFilter(request, response);
+        } catch (ExpiredJwtException | IllegalArgumentException e) {
+            // Refresh 토큰 만료 시 로그아웃 처리
+            if ("refresh".equals(jwtUtil.getCategory(refreshToken))) {
+                logout(response);
+            }
         }
+    }
 
-        //4. 토큰이 access인지 확인(발급시 Payload에 명시한다)
-        String category = jwtUtil.getCategory(accessToken);
-        if (!category.equals("access")) {
-            //response body
-            PrintWriter writer = response.getWriter();
-            writer.print("invalid access token");
-
-            //response status code
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
-
-        //5. username, userRole 값을 획득
-        String username = jwtUtil.getUserId(accessToken);
-        String userRole = jwtUtil.getUserRole(accessToken);
-
+    private void setAuthentication(String userId, String userRole) {
         MemberDTO dto = new MemberDTO();
-        dto.setUserId(username);
+        dto.setUserId(userId);
         dto.setUserRole(userRole);
 
         UserInfo userInfo = new UserInfo(dto);
-
         Authentication authToken = new UsernamePasswordAuthenticationToken(userInfo, null, userInfo.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authToken);
+    }
 
-        filterChain.doFilter(request, response);
-
-
+    private void logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("refresh", null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 }
+
