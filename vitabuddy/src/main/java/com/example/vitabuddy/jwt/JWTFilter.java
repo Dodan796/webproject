@@ -51,7 +51,10 @@ public class JWTFilter extends OncePerRequestFilter {
                 jwtUtil.isExpired(accessToken);
                 // 인증 로직 처리
                 String userId = jwtUtil.getUserId(accessToken);
+                System.out.println("userId = " + userId);
+                
                 String userRole = jwtUtil.getUserRole(accessToken);
+                System.out.println("userRole = " + userRole);
                 setAuthentication(userId, userRole);
                 filterChain.doFilter(request, response);
                 return;

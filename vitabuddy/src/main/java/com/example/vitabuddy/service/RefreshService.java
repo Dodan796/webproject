@@ -21,7 +21,6 @@ public class RefreshService {
     }
 
     // 여기에서 DAO를 통해 refreshToken을 저장하는 로직을 구현
-
     public void saveRefreshToken(RefreshVO refreshVO) {
         dao.saveRefreshToken(refreshVO);
     }

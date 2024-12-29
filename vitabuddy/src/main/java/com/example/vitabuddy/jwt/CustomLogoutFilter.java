@@ -23,6 +23,14 @@ public class CustomLogoutFilter extends GenericFilterBean {
         this.refreshService = refreshService;
     }
 
+    // 등록된 쿠키를 삭제하는 메서드.
+    private void deleteCookie(HttpServletResponse response, String cookieName) {
+        Cookie cookie = new Cookie(cookieName, null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         doFilter((HttpServletRequest) request, (HttpServletResponse) response, chain);
@@ -89,12 +97,5 @@ public class CustomLogoutFilter extends GenericFilterBean {
         deleteCookie(response, "userId");
 
         response.setStatus(HttpServletResponse.SC_OK);
-    }
-
-    private void deleteCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        response.addCookie(cookie);
     }
 }

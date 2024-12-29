@@ -21,7 +21,7 @@
 
             <!-- 일반 회원 -->
            <c:if test="${userRole == 'ROLE_USER'}">
-               <p>User ID: ${userId}</p>
+               <p>${userId}</p>
                <a href="/logout" id="logoutButton">로그아웃</a>
                <a href="<c:url value='/supplement/wishList'/>">
                     <i class="fas fa-solid fa-heart"></i>
