@@ -73,6 +73,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> credentials = mapper.readValue(request.getInputStream(), Map.class);
 
+            //(결론: username이라 했지만 이는 userId를 가져오는 로직)
+            //예: qwer1234를 가져온다. 홍길동 X.
             String username = credentials.get("username");
             String password = credentials.get("password");
 

@@ -1,5 +1,6 @@
 package com.example.vitabuddy.dao;
 
+import com.example.vitabuddy.dto.KakaoDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,12 @@ public class MemberDAO {
     public void insertMember(MemberDTO member) {
         sqlSession.insert("MemberMapper.insertMember", member);
     }
+
+    //카카오DTO에 있는 사용자 정보 DB에 등록
+    public void insertKakaoMember(KakaoDTO kakaomember) {
+        sqlSession.insert("MemberMapper.insertKakaoMember", kakaomember);
+    }
+
 
     public MemberDTO getUserById(String userId) {
         return sqlSession.selectOne("MemberMapper.selectUserById", userId);
