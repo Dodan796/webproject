@@ -2,10 +2,14 @@ package com.example.vitabuddy.jwt;
 
 import com.example.vitabuddy.dto.MemberDTO;
 import com.example.vitabuddy.dto.UserInfo;
+import com.example.vitabuddy.service.RefreshService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,61 +17,93 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Slf4j
 public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
+    private final RefreshService refreshService;
 
-    public JWTFilter(JWTUtil jwtUtil) {
+    public JWTFilter(JWTUtil jwtUtil, RefreshService refreshService) {
         this.jwtUtil = jwtUtil;
+        this.refreshService = refreshService;
     }
-
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
-        //1. request에서 Authorization 헤더를 찾음
-        String authorization = request.getHeader("Authorization");
+        String accessToken = request.getHeader("access");
+        String refreshToken = null;
 
-        //Authorization 헤더 검증
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
+        // Refresh 토큰 쿠키에서 가져오기
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("refresh".equals(cookie.getName())) {
+                    refreshToken = cookie.getValue();
+                }
+            }
+        }
 
-            System.out.println("token null");
+        try {
+            // Access 토큰 유효성 검증
+            if (accessToken != null) {
+                jwtUtil.isExpired(accessToken);
+                // 인증 로직 처리
+                String userId = jwtUtil.getUserId(accessToken);
+                System.out.println("userId = " + userId);
+                
+                String userRole = jwtUtil.getUserRole(accessToken);
+                System.out.println("userRole = " + userRole);
+                setAuthentication(userId, userRole);
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            // Access 토큰이 만료된 경우 Refresh 토큰으로 재발급
+            if (refreshToken != null) {
+                jwtUtil.isExpired(refreshToken); // Refresh 토큰 유효성 검증
+                if (!refreshService.existsByRefresh(refreshToken)) {
+                    throw new IllegalArgumentException("Refresh token invalid");
+                }
+
+                String userId = jwtUtil.getUserId(refreshToken);
+                String userRole = jwtUtil.getUserRole(refreshToken);
+
+                // 새 Access 토큰 발급
+                String newAccessToken = jwtUtil.createJwt("access", userId, userRole, 600000L);
+                response.setHeader("access", newAccessToken);
+                setAuthentication(userId, userRole);
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            // Access 및 Refresh 토큰 모두 없는 경우
             filterChain.doFilter(request, response);
-
-            //조건이 해당되면 메소드 종료 (필수)
-            return;
+        } catch (ExpiredJwtException | IllegalArgumentException e) {
+            // Refresh 토큰 만료 시 로그아웃 처리
+            if ("refresh".equals(jwtUtil.getCategory(refreshToken))) {
+                logout(response);
+            }
         }
+    }
 
-        String token = authorization.split(" ")[1];
+    private void setAuthentication(String userId, String userRole) {
+        MemberDTO dto = new MemberDTO();
+        dto.setUserId(userId);
+        dto.setUserRole(userRole);
 
-        //토큰 소멸 시간 검증
-        if(jwtUtil.isExpired(token)){
-            System.out.println("token expired");
-            filterChain.doFilter(request,response);
-
-            return;
-        }
-
-        //token에서 userId, userRole를 가져온다
-        String userId = jwtUtil.getUserId(token);
-        String userRole = jwtUtil.getUserRole(token);
-
-        //MemberDTO를 생성하여 값을 set
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setUserId(userId);
-        memberDTO.setUserPwd("temppassword");
-        memberDTO.setUserRole(userRole);
-
-        //UserInfo에 회원정보 객체를 담는다.
-        UserInfo userInfo = new UserInfo(memberDTO);
-
-        //Spring Security 인증 토큰을 생성
+        UserInfo userInfo = new UserInfo(dto);
         Authentication authToken = new UsernamePasswordAuthenticationToken(userInfo, null, userInfo.getAuthorities());
-
-        //session에 사용자를 등록
         SecurityContextHolder.getContext().setAuthentication(authToken);
+    }
 
-        filterChain.doFilter(request,response);
-
+    private void logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("refresh", null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 }
+
