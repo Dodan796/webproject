@@ -17,5 +17,11 @@ public class KakaoDAO {
         sqlSession.insert("KakaoMapper.insertKakaoMember", kakaomember);
     }
 
+    public String findByUserId(String userId){
+        return sqlSession.selectOne("KakaoMapper.selectUserById", userId);
+    }
+
+
+
 
 }

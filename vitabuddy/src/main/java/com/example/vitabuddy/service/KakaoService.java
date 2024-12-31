@@ -119,7 +119,8 @@ public class KakaoService {
             JsonElement element = parser.parse(userInforesult);
 
             //
-            long userId = element.getAsJsonObject().get("id").getAsLong();
+            long id = element.getAsJsonObject().get("id").getAsLong();
+            String userId = "kakao" + id;
             System.out.println("userId: " + userId);
 
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();   //응답 데이터 형식은 카카오 문서 참고
@@ -144,6 +145,17 @@ public class KakaoService {
 
         return userInfo;
     }
+
+
+    //user가 DB 에 존재하는지 확인하는 코드
+    public Boolean findByUserId(String userId){
+        if (kakaoDAO.findByUserId(userId) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     //사용자 정보 DB에 저장
     public void registerkakaoMember(KakaoDTO member) {
