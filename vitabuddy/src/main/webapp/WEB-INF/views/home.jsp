@@ -38,17 +38,17 @@
 	<div class="mainMenu">
 
 	<!-- 로그인 하지 않은 경우 -->
-		<c:if test="${empty sessionScope.kakaoUserId }">
+		<c:if test="${empty sessionScope.sid}">
 		<a href="<c:url value='/supplement/supplementList'/>"><img src="<c:url value='/image/prdList.png'/>" class="menuImg"><br>상점</a>
 		</c:if>
 
 	<!-- 로그인 한 경우 -->
-		<c:if test="${not empty sessionScope.kakaoUserId }">
+		<c:if test="${not empty sessionScope.sid}">
 		<a href="<c:url value='/supplement/supplementList'/>"><img src="<c:url value='/image/prdList.png'/>" class="menuImg"><br>상점</a>
 		<a href="<c:url value='/member/myPage'/>"><img src="<c:url value='/image/myPage.png'/>" class="menuImg"><br>마이페이지</a>
 		</c:if>
 	</div>
-</section>	
+</section>
 <br><br>
 <section class="home item">
     <h2>인기상품</h2>

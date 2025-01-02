@@ -9,12 +9,12 @@
         </div>
 		<div id="topMenu">			
 			<!-- 로그인 및 회원가입 -->
-			<c:if test="${empty sessionScope.kakaoUserId}"> <!--kakao로그인 실패 시 -->
+			<c:if test="${empty sessionScope.sid}"> <!--kakao로그인 실패 시 -->
 				<a href="<c:url value='/intro'/>">로그인</a>
 				<a href="<c:url value='/member/register'/>">회원가입</a>
 			</c:if>
 			<!-- 로그아웃 및 유저 메뉴 -->
-			<c:if test="${not empty sessionScope.kakaoUserId}"> <!--kakao로 로그인 되었을 경우 -->
+			<c:if test="${not empty sessionScope.sid}"> <!--kakao로 로그인 되었을 경우 -->
 				<a href="<c:url value='/member/logout'/>">로그아웃</a>
 				<a href="<c:url value='/supplement/wishList'/>"><i
 					class="fas fa-solid fa-heart"></i></a>

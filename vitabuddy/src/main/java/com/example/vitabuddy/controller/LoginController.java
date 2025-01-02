@@ -26,10 +26,10 @@ public class LoginController {
         return "fail";
     }
     
-    // 2. 로그아웃 기능
+    // 로그아웃 기능 - 소셜 로그인용
     @RequestMapping("/member/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); // 세션 무효화
+        session.invalidate(); // 세션 무효화 (초기화)
         return "redirect:/intro"; // 로그아웃 후 intro 화면으로 이동
     }
 
