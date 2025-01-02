@@ -10,11 +10,9 @@ public class RefreshService {
     @Autowired
     private IRefreshDAO dao;
 
-
     public Boolean existsByRefresh(String refreshToken) {
         return dao.existsByRefresh(refreshToken);
     }
-
 
     public void deleteByRefresh(String refreshToken) {
         dao.deleteByRefresh(refreshToken);

@@ -14,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 @Slf4j
@@ -50,12 +49,12 @@ public class JWTFilter extends OncePerRequestFilter {
             if (accessToken != null) {
                 jwtUtil.isExpired(accessToken);
                 // 인증 로직 처리
-                String userId = jwtUtil.getUserId(accessToken);
-                System.out.println("userId = " + userId);
+                String userEmail = jwtUtil.getUserEmail(accessToken);
+                System.out.println("userEmail = " + userEmail);
                 
                 String userRole = jwtUtil.getUserRole(accessToken);
                 System.out.println("userRole = " + userRole);
-                setAuthentication(userId, userRole);
+                setAuthentication(userEmail, userRole);
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -67,13 +66,13 @@ public class JWTFilter extends OncePerRequestFilter {
                     throw new IllegalArgumentException("Refresh token invalid");
                 }
 
-                String userId = jwtUtil.getUserId(refreshToken);
+                String userEmail = jwtUtil.getUserEmail(refreshToken);
                 String userRole = jwtUtil.getUserRole(refreshToken);
 
                 // 새 Access 토큰 발급
-                String newAccessToken = jwtUtil.createJwt("access", userId, userRole, 600000L);
+                String newAccessToken = jwtUtil.createJwt("access", userEmail, userRole, 600000L);
                 response.setHeader("access", newAccessToken);
-                setAuthentication(userId, userRole);
+                setAuthentication(userEmail, userRole);
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -88,9 +87,9 @@ public class JWTFilter extends OncePerRequestFilter {
         }
     }
 
-    private void setAuthentication(String userId, String userRole) {
+    private void setAuthentication(String userEmail, String userRole) {
         MemberDTO dto = new MemberDTO();
-        dto.setUserId(userId);
+        dto.setUserEmail(userEmail);
         dto.setUserRole(userRole);
 
         UserInfo userInfo = new UserInfo(dto);

@@ -12,7 +12,6 @@
         <result property="interactionRecommend" column="interactionRecommend" /> 
     </resultMap>
 
-
 	<!-- select  -->
 	<select id="recommendIngredients" parameterType="String" resultMap="recommendMap">
 		SELECT i.IngredientId, i.Ingredient

@@ -34,8 +34,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     // Refresh VO & RefreshService 필드선언
     private RefreshService refreshService;
 
-
-
     // LoginFilter에 주입
     public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, RefreshService refreshService) {
         this.authenticationManager = authenticationManager;
@@ -50,21 +48,21 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         cookie.setMaxAge(24*60*60);
         //cookie.setSecure(true);
         //cookie.setPath("/");
+        cookie.setHttpOnly(true);
         return cookie;
     }
 
     // Refresh 메서드 추가
-    private void addRefresh(String userId, String refreshToken, Long expiration){
+    private void addRefresh(String userEmail, String refreshToken, Long expiration){
         Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis() + expiration);
 
         RefreshVO refreshVO = new RefreshVO();
-        refreshVO.setUserId(userId);
+        refreshVO.setUserEmail(userEmail);
         refreshVO.setRefreshToken(refreshToken);
         refreshVO.setExpiration(timestamp);
 
         // MyBatis를 통해 데이터베이스에 저장
         refreshService.saveRefreshToken(refreshVO);
-
     }
 
     @Override
@@ -101,7 +99,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         }
 
         // 회원 정보
-        String userId = authentication.getName();
+        String userEmail = authentication.getName();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
@@ -109,19 +107,19 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String userRole = auth.getAuthority();
 
         // 토큰 생성
-        String access = jwtUtil.createJwt("access", userId, userRole, 600000L);
-        String refresh = jwtUtil.createJwt("refresh", userId, userRole, 86400000L);
+        String access = jwtUtil.createJwt("access", userEmail, userRole, 600000L);
+        String refresh = jwtUtil.createJwt("refresh", userEmail, userRole, 86400000L);
 
         // Refresh 토큰 저장 로직
-        addRefresh(userId, refresh, 86400000L);
+        addRefresh(userEmail, refresh, 86400000L);
 
         // 응답 설정
         response.setHeader("access", access);
         response.addCookie(createCookie("refresh", refresh));
 
-        // userRole과 userId를 쿠키에 저장
+        // userRole과 userEmail를 쿠키에 저장
         response.addCookie(createCookie("userRole", userRole));
-        response.addCookie(createCookie("userId", userId));
+        response.addCookie(createCookie("userEmail", userEmail));
 
         response.setStatus(HttpStatus.OK.value());
     }

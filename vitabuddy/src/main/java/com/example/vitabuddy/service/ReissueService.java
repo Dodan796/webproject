@@ -37,10 +37,10 @@ public class ReissueService {
     }
 
     //3. addRefresh 메서드 선언
-    private void addRefresh(String userId, String refresh, Long expiredMs){
+    private void addRefresh(String userEmail, String refresh, Long expiredMs){
         Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis() + expiredMs);
         RefreshVO refreshVO = new RefreshVO();
-        refreshVO.setUserId(userId);
+        refreshVO.setUserEmail(userEmail);
         refreshVO.setRefreshToken(refresh);
         refreshVO.setExpiration(timestamp);
 
@@ -77,7 +77,7 @@ public class ReissueService {
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
 
-        String username = jwtUtil.getUserId(refresh);
+        String username = jwtUtil.getUserEmail(refresh);
         String role = jwtUtil.getUserRole(refresh);
 
         String newAccess = jwtUtil.createJwt("access", username, role, 600000L);

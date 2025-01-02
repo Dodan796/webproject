@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loginForm.addEventListener("submit", function (event) {
         event.preventDefault(); // 기본 폼 제출 동작 방지
 
-        const username = document.getElementById("id").value;
+        const username = document.getElementById("email").value;
         const password = document.getElementById("pwd").value;
 
         // AJAX 요청

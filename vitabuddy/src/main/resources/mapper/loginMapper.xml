@@ -6,14 +6,14 @@
     <select id="existsByUsername" resultType="boolean">
         SELECT COUNT(1)
         FROM users
-        WHERE userId = #{userId}
+        WHERE userEmail = #{userEmail}
     </select>
 
     <!-- userId로 회원 정보를 조회 -->
     <select id="findByUsername" resultType="com.example.vitabuddy.dto.MemberDTO">
         SELECT *
         FROM users
-        WHERE userId = #{userId}
+        WHERE userEmail = #{userEmail}
     </select>
 </mapper>
 

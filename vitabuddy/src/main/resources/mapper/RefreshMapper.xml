@@ -7,8 +7,8 @@
     <!-- refreshToken 저장 -->
     <insert id="saveRefreshToken"
             parameterType="com.example.vitabuddy.model.RefreshVO">
-        INSERT INTO REFRESH_TOKEN (userId, refreshToken, expiration)
-        VALUES (#{userId}, #{refreshToken}, #{expiration})
+        INSERT INTO REFRESH_TOKEN (userEmail, refreshToken, expiration)
+        VALUES (#{userEmail}, #{refreshToken}, #{expiration})
     </insert>
 
     <!-- refreshToken 존재 여부 확인 -->

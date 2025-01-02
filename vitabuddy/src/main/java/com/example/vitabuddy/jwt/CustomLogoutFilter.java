@@ -94,7 +94,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
         // 쿠키 삭제
         deleteCookie(response, "refresh");
         deleteCookie(response, "userRole");
-        deleteCookie(response, "userId");
+        deleteCookie(response, "userEmail");
 
         response.setStatus(HttpServletResponse.SC_OK);
     }

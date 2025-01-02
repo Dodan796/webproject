@@ -34,11 +34,13 @@ public class MemberService {
         String encryptedPassword = passwordEncoder.encode(member.getUserPwd());
         member.setUserPwd(encryptedPassword);
         memberDAO.insertMember(member);
-        return true;  // 회원가입 성공
+        // 회원가입 성공
+        return true;
     }
 
     public boolean isUserIdAvailable(String userId) {
-        return memberDAO.getUserById(userId) == null; // 아이디가 존재하지 않으면 true 반환
+        // 아이디가 존재하지 않으면 true 반환
+        return memberDAO.getUserById(userId) == null;
     }
 
     public boolean isUserEmailAvailable(String userEmail) {
