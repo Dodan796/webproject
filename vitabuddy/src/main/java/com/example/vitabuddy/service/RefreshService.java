@@ -11,8 +11,10 @@ public class RefreshService {
     private IRefreshDAO dao;
 
     public Boolean existsByRefresh(String refreshToken) {
-        return dao.existsByRefresh(refreshToken);
+        Boolean exists = dao.existsByRefresh(refreshToken);
+        return exists != null && exists;
     }
+
 
     public void deleteByRefresh(String refreshToken) {
         dao.deleteByRefresh(refreshToken);

@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import java.io.IOException;
 
 @Slf4j
@@ -51,7 +52,7 @@ public class JWTFilter extends OncePerRequestFilter {
                 // 인증 로직 처리
                 String userEmail = jwtUtil.getUserEmail(accessToken);
                 System.out.println("userEmail = " + userEmail);
-                
+
                 String userRole = jwtUtil.getUserRole(accessToken);
                 System.out.println("userRole = " + userRole);
                 setAuthentication(userEmail, userRole);
@@ -59,10 +60,11 @@ public class JWTFilter extends OncePerRequestFilter {
                 return;
             }
 
-            // Access 토큰이 만료된 경우 Refresh 토큰으로 재발급
+            // Access 토큰이 만료된 경우 Refresh 토큰 처리
             if (refreshToken != null) {
                 jwtUtil.isExpired(refreshToken); // Refresh 토큰 유효성 검증
-                if (!refreshService.existsByRefresh(refreshToken)) {
+                Boolean exists = refreshService.existsByRefresh(refreshToken);
+                if (exists == null || !exists) {
                     throw new IllegalArgumentException("Refresh token invalid");
                 }
 
@@ -81,7 +83,7 @@ public class JWTFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException | IllegalArgumentException e) {
             // Refresh 토큰 만료 시 로그아웃 처리
-            if ("refresh".equals(jwtUtil.getCategory(refreshToken))) {
+            if (refreshToken != null && "refresh".equals(jwtUtil.getCategory(refreshToken))) {
                 logout(response);
             }
         }
@@ -105,4 +107,3 @@ public class JWTFilter extends OncePerRequestFilter {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
 }
-
