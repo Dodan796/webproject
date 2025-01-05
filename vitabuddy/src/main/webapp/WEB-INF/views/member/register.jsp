@@ -5,11 +5,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <script src="/js/jquery-3.7.1.min.js"></script>  <!--라이브러리 추가 -->
     <script src="https://kit.fontawesome.com/567f0760c2.js" crossorigin="anonymous"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <title>회원가입</title>
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/register.css'/>">
+    <script src="<c:url value='/js/emailVerification.js'/>"></script> <!-- 이메일 인증 코드 추가 -->
     <script src="<c:url value='/js/register.js'/>"></script> <!-- JS 파일을 추가 -->
+
     <c:import url="/WEB-INF/views/layout/head.jsp"/>
 </head>
 <body>
@@ -38,7 +41,7 @@
                 <div class="box_rowContents">
                     <label>비밀번호 설정</label>
                     <input type="password" name="userPwd" id="userPwd" oninput="pwCheck()" required/>
-                </div>    
+                </div>
                 <p id="pwLeng"></p> <!-- 줄 바꿈을 br에서 p로 통일함 -->
                 <div class="box_rowContents">
                     <label>비밀번호 확인</label>
@@ -47,7 +50,6 @@
                 <p id="pwOk"></p>
 
                 <div class="box_rowContents">
-
                         <label>전화번호</label>
                         <div class="phone-number">
                         <input type="tel" name="userPh1" id="userPh1" placeholder="010" maxlength="3" required/>
@@ -60,9 +62,14 @@
                 <p></p>
                 <div class="box_rowContents">
                     <label>이메일</label>
-                    <input type="email" name="userEmail" id="userEmail" onchange="emailCheck()" required/>
+                    <input type="email" name="userEmail" id="userEmail" onchange="emailCheckfromDB()" required/>
+                    <button type="button" id="verificationEmail">이메일 인증</button><br>
                 </div>
                 <p id="emOk"></p>
+                <div class="box_rowContents" id="verificationEmailCode">
+                     <!-- 25/01/05 추가 코드 : ajax 통신으로 동적으로 들어갈 코드 -->
+                </div>
+                <br>
                 <!-- </div>
                 <div class="right"> 통합 위해 삭제-->
                 <div class="zipcode">

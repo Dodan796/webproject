@@ -16,4 +16,16 @@ public class MemberDTO {
     private String userAddress1;
     private String userAddress2;
 
+    // 이메일 인증 여부 확인 필드 추가
+    private boolean isEmailVerified = false;
+
+    // Getter/Setter 추가
+    public boolean isEmailVerified() {
+        return isEmailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        isEmailVerified = emailVerified;
+    }
+
 }

@@ -22,7 +22,6 @@ public class MemberDAO {
         sqlSession.insert("MemberMapper.insertKakaoMember", kakaomember);
     }
 
-
     public MemberDTO getUserById(String userId) {
         return sqlSession.selectOne("MemberMapper.selectUserById", userId);
     }
