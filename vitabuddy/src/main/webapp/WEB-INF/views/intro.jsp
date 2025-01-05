@@ -38,6 +38,10 @@
                 <br>
                 <button type="submit" id="loginSubmit" class="btn btnFilled">로그인</button>
             </form>
+
+            <a href="/member/socialLogin/google">
+                            Login with Google
+                    </a>
         </div>
 	</section>
 
