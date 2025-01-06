@@ -21,13 +21,16 @@ public class KakaoService {
 
 
     //카카오 로그인 - 인가코드를 전달하여 토큰 얻어오기
-    public String getAccessToken(String authorization_code) throws IOException {
+    public HashMap<String, Object> getAccessToken(String authorization_code) throws IOException {
 
         //여기서부터 프론트에서 받은 인가코드와 함께 post 로 전달하여 카카오에게 토큰을 요청하는 로직
         //POST로 요청해야 하므로, [Header/본문]을 구성한다 -> 공식 문서 참고하자
-        String access_token = "";  //카카오에서 받아올 토큰
-        String refresh_token = "";   //카카오에서 받아올 리프레시 토큰
+        HashMap<String, Object> tokens = new HashMap<String, Object>();
 
+        String access_token="";
+        String refresh_token="";
+        int expires_in=0;
+        int refresh_token_expires_in=0;
         try {
             //URL 생성
             URL url = new URL("https://kauth.kakao.com/oauth/token");
@@ -49,9 +52,8 @@ public class KakaoService {
 
             int responseCode = conn.getResponseCode();
             System.out.println("responseCode = " + responseCode + " 입니다");  //HttpURLConnection 가 제공하는 메서드 중 하나는 responseCode로 응답상태를 볼 수 있다는 것
-            //로그에 200이 찍히면 성공 - 성공함
+            //로그에 200이 찍히면 성공
             //응답이 어떤 구조로 나오는지 - 카카오 문서 참고
-
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = "";
@@ -68,16 +70,26 @@ public class KakaoService {
 
             access_token = element.getAsJsonObject().get("access_token").getAsString();
             refresh_token = element.getAsJsonObject().get("refresh_token").getAsString();
+            expires_in = element.getAsJsonObject().get("expires_in").getAsInt();
+            refresh_token_expires_in = element.getAsJsonObject().get("refresh_token_expires_in").getAsInt();
+
 
             System.out.println("access_token 은 : " + access_token);
-            System.out.println("refresh_token 은 : " + refresh_token);
+            System.out.println("refresh_token 은 : " + refresh_token);  //refresh_token
+
+            tokens.put("access_token", access_token);
+            tokens.put("refresh_token", refresh_token);
+            tokens.put("expires_in", expires_in);
+            tokens.put("refresh_token_expires_in", refresh_token_expires_in);
+
 
             br.close();
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return access_token;
+
+        return tokens;  //액세스, 리프레시 토큰 반환
 
     }
 
@@ -119,7 +131,8 @@ public class KakaoService {
             JsonElement element = parser.parse(userInforesult);
 
             //
-            long userId = element.getAsJsonObject().get("id").getAsLong();
+            long id = element.getAsJsonObject().get("id").getAsLong();
+            String userId = "kakao" + id;
             System.out.println("userId: " + userId);
 
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();   //응답 데이터 형식은 카카오 문서 참고
@@ -129,9 +142,6 @@ public class KakaoService {
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
             System.out.println("email: " + email);
-            //String age_range = kakao_account.getAsJsonObject().get("age_range").getAsString();
-            //String birthday = kakao_account.getAsJsonObject().get("birthday").getAsString();
-            //String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
 
             //HashMap 에 넣기
             userInfo.put("userId", userId);
@@ -145,11 +155,26 @@ public class KakaoService {
         return userInfo;
     }
 
-    //사용자 정보 DB에 저장
+
+    //user가 DB 에 존재하는지 확인하는 코드
+    public Boolean findByUserId(String userId){
+        String userIdfromDB = kakaoDAO.findByUserId(userId);
+        if(userIdfromDB == null || userIdfromDB.isEmpty()){
+            System.err.println("userEmail이 null 또는 비어있습니다");
+        }
+        //return userEmailfromDB!=null && !userEmailfromDB.isEmpty();
+        return userIdfromDB != null && !userIdfromDB.isEmpty();  //Cannot invoke "String.isEmpty()" because "userIdfromDB" is null (앞부분만 할 경우 이러한 에러가 생김String이기 대문)
+    }
+
+
+    //DB에 저장
     public void registerkakaoMember(KakaoDTO member) {
         kakaoDAO.insertKakaoMember(member);
     }
 
+    public String getUserById(String userId){
+        return kakaoDAO.findByUserId(userId);
+    }
 
 
 }

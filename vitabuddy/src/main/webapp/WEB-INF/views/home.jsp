@@ -40,12 +40,12 @@
         <c:set var="userRole" value="${cookie.userRole != null ? cookie.userRole.value : null}" />
         <c:set var="userId" value="${cookie.userId != null ? cookie.userId.value : null}" />
 	<!-- 로그인 하지 않은 경우 -->
-		 <c:if test="${userRole == null}">
+		<c:if test="${empty sessionScope.sid or userRole == null}" >
 		<a href="<c:url value='/supplement/supplementList'/>"><img src="<c:url value='/image/prdList.png'/>" class="menuImg"><br>상점</a>
 		</c:if>
 
 	<!-- 로그인 한 경우 -->
-		<c:if test="${userRole == 'ROLE_USER'}">
+		<c:if test="${not empty sessionScope.sid or userRole == 'ROLE_USER'}">
 		<a href="<c:url value='/supplement/supplementList'/>"><img src="<c:url value='/image/prdList.png'/>" class="menuImg"><br>상점</a>
 		<a href="<c:url value='/member/myPage'/>"><img src="<c:url value='/image/myPage.png'/>" class="menuImg"><br>마이페이지</a>
 		</c:if>
