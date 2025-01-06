@@ -1,8 +1,15 @@
 package com.example.vitabuddy.controller;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
+import com.example.vitabuddy.dto.UserInfo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +26,10 @@ public class HomeController {
 		return "intro";
 	}
 
-	// 2. 메인홈페이지.
+	// 2. 메인홈페이지. => 회원용
 	@RequestMapping("/")
     public String home(Model model) {
+
         // 브랜드별 상위 1개의 상품을 가져옴
 		//기능별, 성분별 상위 상품 추가
         List<SupplementStoreVO> topSupplementsByBrand = reviewService.getTopSupplementsByBrand();
@@ -34,7 +42,13 @@ public class HomeController {
         model.addAttribute("topSupplementsIngredient", topSupplementsByIngredient);
         return "home";
     }
-    
+
+    //3.메인페이지 => 관리자용
+    @RequestMapping("/admin")
+    public String adminHome(){
+        return "adminHome";
+    }
+
     // 10/26 이미지 출력 - IReviewService 의존성 주입
     @Autowired
     private IReviewService reviewService;

@@ -1,36 +1,30 @@
 package com.example.vitabuddy.service;
 
-import java.util.HashMap;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.vitabuddy.dao.ILoginDAO;
+import com.example.vitabuddy.dto.MemberDTO;
+import com.example.vitabuddy.dto.UserInfo;
+import com.example.vitabuddy.model.MemberVO;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.vitabuddy.dao.MemberDAO;
-
 @Service
-public class LoginService implements ILoginService {
+public class LoginService implements UserDetailsService {
 
-    @Autowired
-    private MemberDAO memberDAO;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    
-    @Override
-    public String login(HashMap<String, Object> map) {
-        String userId = (String) map.get("id");
-        String rawPassword = (String) map.get("pwd");
+    private final ILoginDAO dao;
 
-        // DB에서 암호화된 비밀번호를 가져옴
-        String encryptedPassword = memberDAO.getPasswordByUserId(userId);
-        
-        String result = "fail";
-        
-        // 암호화된 비밀번호와 사용자 입력 비밀번호 비교
-        if (encryptedPassword != null && passwordEncoder.matches(rawPassword, encryptedPassword)) {
-            result = "success";
-        }
-        return result;
+    public LoginService(ILoginDAO dao) {
+        this.dao = dao;
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        MemberDTO userData = dao.findByUsername(userId);
+        if (userData == null) { // userData가 null인 경우
+            throw new UsernameNotFoundException("User not found with userId: " + userId); // 예외를 던짐
+        }
+        return new UserInfo(userData); // 정상적으로 UserInfo 객체를 반환
+    }
+
 }

@@ -9,7 +9,7 @@
 
 <c:import url="/WEB-INF/views/layout/head.jsp" />	
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/intro.css'/>">
-<script src="<c:url value='/js/login.js'/>"></script>
+<script src="<c:url value='/js/login.js'/>" defer></script>
 <script src="<c:url value='/js/kakaoOAuth.js'/>"></script>
 
 </head>
@@ -19,18 +19,14 @@
 	<div class="introTitle">
 		<img src="<c:url value='/image/mainImage.png'/>" id="logoImg">
 	</div>
-
-
-
 	<section>
-
 	<h1 class="main-title">
 		WELCOME TO YOUR<br>HEALTH PARTNER VITABUDDY
 		</h1>
         <!-- 로그인 폼 -->
         <div class="loginForm">
-            <form>
-                <label for="id">아이디</label>
+            <form id="loginForm">
+                <label for="email">이메일</label>
                 <br>
                 <input type="text" id="id" name="id" class="formTxt" placeholder="아이디" required>
                 <br>

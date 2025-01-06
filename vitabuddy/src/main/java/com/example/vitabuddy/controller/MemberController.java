@@ -26,7 +26,6 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-
     // GET 요청으로 JSP 페이지를 로드할 수 있도록 설정
     @GetMapping("/register")
     public String showRegisterPage() {
@@ -43,13 +42,13 @@ public class MemberController {
             response.put("message", "비밀번호 확인이 일치하지 않습니다.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response); // 에러 상태와 메시지를 반환
         }
-        
+
         response.put("success", true);
         response.put("redirect", "/member/login");
         return ResponseEntity.ok(response); // 성공 시 응답과 리다이렉트 URL을 JSON으로 반환
     }
 
-    
+
     @GetMapping("/checkId")
     public ResponseEntity<Map<String, Boolean>> checkId(@RequestParam String userId) {
         boolean isAvailable = memberService.isUserIdAvailable(userId);

@@ -9,11 +9,11 @@ import com.example.vitabuddy.service.LoginService;
 import jakarta.servlet.http.HttpSession;
 @Controller
 public class LoginController {
-    @Autowired 
-    LoginService logService;
+    //@Autowired
+    //LoginService logService;
     
     // 1. 로그인 기능
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping("/intro/login")
     public String loginCheck(@RequestParam HashMap<String, Object> param, HttpSession session) {
         String result = logService.login(param);
@@ -24,7 +24,7 @@ public class LoginController {
             return "success";
         } 
         return "fail";
-    }
+    }*/
     
     // 로그아웃 기능 - 소셜 로그인용
     @RequestMapping("/member/logout")

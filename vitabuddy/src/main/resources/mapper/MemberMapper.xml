@@ -7,8 +7,8 @@
     
     <!-- 회원 등록 쿼리 -->
     <insert id="insertMember" parameterType="com.example.vitabuddy.dto.MemberDTO">
-        INSERT INTO users (UserId, UserName, UserPwd, UserEmail, UserPh, UserZipcode, UserAddress1, UserAddress2)
-        VALUES (#{userId}, #{userName}, #{userPwd}, #{userEmail}, #{userPh}, #{userZipcode}, #{userAddress1}, #{userAddress2})
+        INSERT INTO users (UserId, UserName, UserPwd, UserRole, UserEmail, UserPh, UserZipcode, UserAddress1, UserAddress2)
+        VALUES (#{userId}, #{userName}, #{userPwd}, #{userRole}, #{userEmail}, #{userPh}, #{userZipcode}, #{userAddress1}, #{userAddress2})
     </insert>
         
     <!-- UserID로 회원 정보 조회 쿼리 -->

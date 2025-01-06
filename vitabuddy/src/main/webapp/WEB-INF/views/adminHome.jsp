@@ -10,7 +10,7 @@
 <title>VitaBuddy</title>
  	<link rel="stylesheet" type="text/css" href="<c:url value='/css/home.css'/>">
  	<script src="<c:url value='/js/home.js'/>" defer></script>
-	<c:import url="/WEB-INF/views/layout/head.jsp" />	 
+	<c:import url="/WEB-INF/views/layout/head.jsp" />
 </head>
 <body>
 <div id="wrap">
@@ -27,25 +27,23 @@
 			</button>
 		</form>
 	</div>
-	
-	
+
+
 	<div class="title"><strong>건강한 영양제 복용을 위한 파트너!</strong><br><br>맞춤 성분 추천과 올바른 복용법 가이드를 통해 더 쉽게 건강을 관리하세요.
 	<div class="background-text">VitaBuddy</div></div>
 	<br>
-	
+
 <section class="home">
 	<!-- 메인메뉴 -->
 	<div class="mainMenu">
-     <!-- 쿠키에서 userRole과 userId 값을 가져옴 -->
-        <c:set var="userRole" value="${cookie.userRole != null ? cookie.userRole.value : null}" />
-        <c:set var="userId" value="${cookie.userId != null ? cookie.userId.value : null}" />
+
 	<!-- 로그인 하지 않은 경우 -->
-		<c:if test="${empty sessionScope.sid or userRole == null}" >
+		<c:if test="${empty sessionScope.sid }">
 		<a href="<c:url value='/supplement/supplementList'/>"><img src="<c:url value='/image/prdList.png'/>" class="menuImg"><br>상점</a>
 		</c:if>
 
 	<!-- 로그인 한 경우 -->
-		<c:if test="${not empty sessionScope.sid or userRole == 'ROLE_USER'}">
+		<c:if test="${not empty sessionScope.sid }">
 		<a href="<c:url value='/supplement/supplementList'/>"><img src="<c:url value='/image/prdList.png'/>" class="menuImg"><br>상점</a>
 		<a href="<c:url value='/member/myPage'/>"><img src="<c:url value='/image/myPage.png'/>" class="menuImg"><br>마이페이지</a>
 		</c:if>
