@@ -23,7 +23,7 @@ public class WishListController {
 	// 1. 찜 목록 조회
 	@GetMapping("/wishList")
 	public String getWishList(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("sid");
+		String userId = (String) session.getAttribute("sid");  //1234
 		model.addAttribute("wishList", wishService.getWishList(userId));
 		return "supplement/wishList";
 	}

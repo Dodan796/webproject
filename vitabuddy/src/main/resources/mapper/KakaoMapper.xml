@@ -9,7 +9,7 @@
     <!-- 카카오 소셜 로그인 : 일단 kakaousers 테이블 생성함 (migraion) -->
     <insert id="insertKakaoMember" parameterType="com.example.vitabuddy.dto.KakaoDTO">
         INSERT INTO kakaousers (UserId, UserName, UserEmail)
-        VALUES (#{userId jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{userEmail, jdbcType=VARCHAR})
+        VALUES (#{userId, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{userEmail, jdbcType=VARCHAR})
     </insert>
 
     <!-- userId가 존재하는지 확인 -->
