@@ -93,7 +93,7 @@ public class KakaoController {
                 System.out.println("로그인만 성공입니다");
             } else {
                 kakaoService.registerkakaoMember(kakaoDTO);
-                session.setAttribute("sid", kakaoDTO);
+                session.setAttribute("sid", kakaoDTO.getUserId());  // 수정사항 : kakaoDTO를 sid로 설정하면 userId를 불러올 수가 없으므로 getUserId를 무조건 설정
                 System.out.println("회원가입 + 로그인 성공입니다");
             }
 
