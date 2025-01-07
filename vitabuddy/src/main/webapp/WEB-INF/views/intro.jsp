@@ -37,7 +37,7 @@
                 <button type="submit" id="loginSubmit" class="btn btnFilled">로그인</button>
             </form>
             <!--카카오 로그인-->
-            <a href="https://kauth.kakao.com/oauth/authorize?client_id=d04c3a1dba697423aa56a189f1e5f65b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code">
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=d04c3a1dba697423aa56a189f1e5f65b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code&prompt=login">
                 <img src="<c:url value='/image/kakao_login_medium_narrow.png'/>" id="kakaologoImg">
             </a>
         </div>
