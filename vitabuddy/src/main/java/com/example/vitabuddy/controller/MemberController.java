@@ -1,8 +1,11 @@
 package com.example.vitabuddy.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.vitabuddy.dto.KakaoDTO;
+import com.example.vitabuddy.model.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
