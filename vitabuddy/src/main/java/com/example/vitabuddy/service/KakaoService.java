@@ -19,7 +19,6 @@ public class KakaoService {
     @Autowired
     KakaoDAO kakaoDAO;
 
-
     //카카오 로그인 - 인가코드를 전달하여 토큰 얻어오기
     public HashMap<String, Object> getAccessToken(String authorization_code) throws IOException {
 
