@@ -77,7 +77,7 @@ public class GoogleController {
         } else {
             // 이메일이 등록되어 있지 않으면 회원가입 처리 (사용자 등록 - 서비스 호출)
             googleService.insertGoogleMember(googleDTO);  //DB저장하는 코드
-            session.setAttribute("sid", googleDTO); //수정2. 회원가입도 session 세팅해줘야 함
+            session.setAttribute("sid", googleDTO.getSocialId()); //수정2. 회원가입도 session 세팅해줘야 함
             return "redirect:/";
 
         }
