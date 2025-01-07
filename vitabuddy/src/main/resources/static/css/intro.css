@@ -1,4 +1,4 @@
-/* ÀüÃ¼ ½ºÅ¸ÀÏ */
+/* ï¿½ï¿½Ã¼ ï¿½ï¿½Å¸ï¿½ï¿½ */
 * {
     margin: 0;
     padding: 0;
@@ -20,7 +20,7 @@ a{
 	text-decoration: none;
 }
 
-/* ¹öÆ° ÅÂ±× ±âº» css Á¦°Å */
+/* ï¿½ï¿½Æ° ï¿½Â±ï¿½ ï¿½âº» css ï¿½ï¿½ï¿½ï¿½ */
 button{
 	cursor: pointer;
 	text-decoration: none;
@@ -32,7 +32,7 @@ button{
 }
 
 
-/* ÀÎÆ®·Î ÀÌ¹ÌÁö */
+/* ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ */
 .introTitle img {
     opacity: 50%;
     position: absolute;
@@ -44,18 +44,18 @@ button{
     z-index: 1;
 }
 
-/* ¸ÞÀÎ Å¸ÀÌÆ² */
+/* ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½Æ² */
 .main-title {
     position: relative;
     z-index: 2;
     color: #583b1f;
-    /* ±ÛÀÚ Å©±â Á¶Á¤ */
-    font-size: 4.3vw; /* ³Êºñ¿¡ µû¶ó ±ÛÀÚ Å©±â Á¶Á¤ */
+    /* ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+    font-size: 4.3vw; /* ï¿½Êºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
     font-weight: 800;
-    /* Á¦¸ñ ±ÛÀÚ ¿ìÃø Á¤·Ä */
+    /* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
     text-align: right;
     margin-top: 5vh;
-    /* padding ¼öÁ¤ */
+    /* padding ï¿½ï¿½ï¿½ï¿½ */
     padding: 0 5%; 
     line-height: 1.2; 
 }
@@ -68,16 +68,16 @@ section div {
     align-items: center;
 }
 
-/* ¶óº§ ¿ÞÂÊ Á¤·Ä */
+/* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 label {
     display: block;
     text-align: left; 
 }
 
-/* input ÇÊµå Áß¾Ó Á¤·Ä */
+/* input ï¿½Êµï¿½ ï¿½ß¾ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 .loginForm input.formTxt {
     display: block;
-    margin: 0 auto; /* Áß¾Ó Á¤·Ä */
+    margin: 0 auto; /* ï¿½ß¾ï¿½ ï¿½ï¿½ï¿½ï¿½ */
     width: 100%; 
     max-width: 600px; 
     padding: 10px;
@@ -89,7 +89,7 @@ label {
     background-color: #f2f2f2; 
 }
 
-/* ·Î±×ÀÎ Æû Áß¾Ó Á¤·Ä */
+/* ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß¾ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 .loginForm {
     width: 100%; 
     max-width: 500px; 
@@ -101,7 +101,7 @@ label {
     margin-bottom:20px;
 }
 
-/* ·Î±×ÀÎ ¹öÆ° Áß¾Ó Á¤·Ä */
+/* ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½ß¾ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 .loginForm #loginSubmit {
     width: 150px;
     height: 40px;
@@ -130,28 +130,28 @@ label {
 }
 
 
-/* ¹öÆ° hover */
+/* ï¿½ï¿½Æ° hover */
 .btnFilled:hover {
     background-color: #71543d;
     transition: background-color 0.3s ease;
 }
 
-/* È­¸é Å©±â Á¶Á¤½Ã ±ÛÀÚÅ©±â */
+/* È­ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ */
 @media (max-width: 768px) {
     .main-title {
-        font-size: 8vw; /* ÀÛÀº È­¸é */
+        font-size: 8vw; /* ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ */
     }
 }
 
 @media (max-width: 480px) {
     .main-title {
-        font-size: 6vw; /* ´õ ÀÛÀº È­¸é */
+        font-size: 6vw; /* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ */
     }
 }
 
-section {/* ¼½¼Ç È­¸é ¿ìÃø ÀÌµ¿ */
+section {/* ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ */
 	width: 70%;
     position: relative;
-    left: 30%; /* È­¸éÀÇ 30%¿¡¼­ ½ÃÀÛ */
+    left: 30%; /* È­ï¿½ï¿½ï¿½ï¿½ 30%ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
     text-align: center; 
 }

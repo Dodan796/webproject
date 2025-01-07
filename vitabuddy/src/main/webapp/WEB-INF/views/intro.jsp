@@ -28,7 +28,7 @@
             <form id="loginForm">
                 <label for="email">이메일</label>
                 <br>
-                <input type="text" id="email" name="email" class="formTxt" placeholder="이메일" required>
+                <input type="text" id="email" name="email" class="formTxt" placeholder="이메일" required>  <!-- input 태그 email로 변경 -->
                 <br>
                 <label for="pwd">비밀번호</label>
                 <br>
@@ -36,14 +36,13 @@
                 <br>
                 <button type="submit" id="loginSubmit" class="btn btnFilled">로그인</button>
             </form>
-        </div>
-
-        <div class="kakaoLogin">  <!-- get 방식으로 client_id와 redirect_url 카카오로 요청 -> 인가 코드 받아오기-->
+            <!--카카오 로그인-->
             <a href="https://kauth.kakao.com/oauth/authorize?client_id=d04c3a1dba697423aa56a189f1e5f65b&redirect_uri=http://localhost:8080/oauth/kakao/callback&response_type=code">
                 <img src="<c:url value='/image/kakao_login_medium_narrow.png'/>" id="kakaologoImg">
             </a>
-
         </div>
+
+
 	</section>
 
 <br>
