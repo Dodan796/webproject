@@ -52,7 +52,7 @@ public class webSecurityConfig {
                 .requestMatchers("/WEB-INF/views/**").permitAll() // JSP 파일 접근 허용
                 .requestMatchers("/static/**").permitAll() // 정적 리소스 허용
                 .requestMatchers("/css/**", "/js/**", "/image/**").permitAll() // 명시적 허용
-                .requestMatchers("/", "/login","/logout", "/intro","/member/**","/supplement/**","/oauth/kakao/**").permitAll() // JSP 반환 컨트롤러 허용
+                .requestMatchers("/", "/login","/logout", "/intro","/member/**","/supplement/**","/oauth/kakao/**", "/api/**").permitAll() // JSP 반환 컨트롤러 허용
                 .requestMatchers("/admin").hasAuthority("ROLE_ADMIN") // 관리자 권한
                 .anyRequest().authenticated());
 

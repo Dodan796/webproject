@@ -18,16 +18,14 @@ public class LoginController {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 
-
-
     // 1. 로그인 기능
     /*@ResponseBody
     @RequestMapping("/intro/login")
-    public String loginCheck(@RequestParam HashMap<String, Object> param, HttpSession session) {
-        String result = logService.login(param);
-        
-        if(result.equals("success")) {
-            // 세션에 userId를 sid로 저장
+//    public String loginCheck(@RequestParam HashMap<String, Object> param, HttpSession session) {
+//        String result = logService.login(param);
+//
+//        if(result.equals("success")) {
+//            // 세션에 userId를 sid로 저장
             session.setAttribute("sid", param.get("id"));
             return "success";
         } 
