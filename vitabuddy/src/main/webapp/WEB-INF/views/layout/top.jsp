@@ -15,11 +15,12 @@
             <c:set var="userId" value="${cookie.userId != null ? cookie.userId.value : null}" />
 
             <!--kakao로그인 실패 시 || 비회원 (userRole이 null일 때) -->
-            <c:if test="${empty sessionScope.sid or userRole == null}" >
+            <c:if test="${empty sessionScope.sid and userRole == null}" >  <!-- or >> and 로 수정-->
 				<a href="<c:url value='/intro'/>">로그인</a>
 				<a href="<c:url value='/member/register'/>">회원가입</a>
 			</c:if>
 
+            <!-- 로그인 성공 -->
 			<!-- 1. 카카오 소셜 로그인 -->
             <c:if test="${not empty sessionScope.sid}"> <!--kakao로 로그인 되었을 경우 -->
                 <a href="<c:url value='/member/logout'/>">로그아웃</a>

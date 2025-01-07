@@ -28,7 +28,7 @@
             <form id="loginForm">
                 <label for="email">이메일</label>
                 <br>
-                <input type="text" id="id" name="id" class="formTxt" placeholder="아이디" required>
+                <input type="text" id="email" name="email" class="formTxt" placeholder="이메일" required>
                 <br>
                 <label for="pwd">비밀번호</label>
                 <br>
