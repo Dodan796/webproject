@@ -10,17 +10,19 @@
 		<title>주문서 작성</title>
 		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="<c:url value='/js/searchZip.js'/>"></script>
-		<c:import url="/WEB-INF/views/layout/head.jsp" />	
+        <script src="https://js.tosspayments.com/v2/standard"></script>
+        <script src="<c:url value='/js/payment.js'/>"></script>
+		<c:import url="/WEB-INF/views/layout/head.jsp" />
 		<link rel="stylesheet" type="text/css" href="<c:url value='/css/orderForm.css'/>">
 	</head>
 	<body>
 		<div id="wrap">
-        	<!--  top -->         
+        	<!--  top -->
         	<c:import url="/WEB-INF/views/layout/top.jsp" />
-        
-        		
+
+
         	<form method="post" action="<c:url value='/supplement/orderComplete'/>"> <!-- *****요청드릴 사항 : form태그가 장바구니 리스트까지 전부 포함하도록 - 주문목록 정보는 order_product테이블에, 배송정보(주문정보)는 orderInfo 테이블로 분리해 컨트롤러에서 처리할 예정 -->
-        	
+
         	<section class="prdList">
         		<div class="headers">
 		            <h1>주문/결제</h1>
@@ -58,9 +60,9 @@
         			</tr>
         		</table>
         	</section>
-        	
+
         	<br>
-        	
+
         	<!-- 수정사항 시작  -->
         	<section class="order">
         	<h3>배송 정보</h3>
@@ -83,16 +85,14 @@
                         </td><td class="searchBtn"><button type="button" name="searchBtn" class="btn" onclick=searchZip()>우편번호 찾기</button></td></tr>
             <tr><td>주소</td><td colspan="3"><input type="text" name="ordRcvAddress1" id="userAddress1" value="${myInfo.userAddress1}" readonly/></td><td></td></tr>  <!-- id명 searchZip.js에 있는 id 로 변경 -->
             <tr><td>상세주소</td><td colspan="3"><input type="text" name="ordRcvAddress2" id="userAddress2" value="${myInfo.userAddress2}"/></td><td></td></tr> <!-- readonly 삭제 -->
-            <tr><td>결제 방법</td><td colspan="3">
-	        	<select name="ordPay" required>   <!-- required 추가 -->
-	        		<option value=""disabled selected>결제 방법을 선택해주세요</option>
-	  		 		<option value="신용카드">신용카드</option>
-	  		 		<option value="계좌이체">계좌이체</option>      		  		 		
-	  		 	</select></td><td></td></tr>
+
 		  	<tr><td>배송 시 <br> 요청사항</td><td colspan="3">
 		        	 <textarea name="ordRcvMsg" id="ordRcvMsg" rows="5" cols="50" placeholder="배송메시지를 입력해주세요" ></textarea></td><td></td></tr> <!-- required X -> 선택사항 -->
         	</table>
-            <button class="submit-btn" type="submit" id="submitBtn">결제 완료</button> <!-- type을 button이 아닌 submit으료 변경 -->
+        	<input type="hidden" name="orderId" id="orderId" value="ORD123456">
+                    <input type="hidden" name="amount" id="amount" value="50000">
+                    <input type="hidden" name="orderName" id="orderName" value="건강 보조 식품 패키지">
+            <button class="submit-btn" type="button" id="submitBtn" onclick="requestPayment()">결제하기</button> <!-- type을 button이 아닌 submit으료 변경 -->
         <br>
         	</section>
         	</form>

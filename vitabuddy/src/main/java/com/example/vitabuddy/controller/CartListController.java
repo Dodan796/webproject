@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class CartListController {
 	@RequestMapping("/supplement/cartList")
 	public String cartList(Model model, HttpSession session) {
 		String userId = (String) session.getAttribute("sid"); // 로그인된 userId 추출
-		
+
 		ArrayList<CartListVO> cartLists = cartListService.cartList(userId);
 		model.addAttribute("cartLists", cartLists);
 		return "supplement/cartList";
@@ -122,11 +123,21 @@ public class CartListController {
 		ArrayList<CartListVO> cartLists = cartListService.cartList(userId);
 		model.addAttribute("cartLists", cartLists);
 
+		// 주문 ID 생성
+		String orderId = UUID.randomUUID().toString();
+		model.addAttribute("orderId", orderId);
+
+		// 총 결제 금액 계산
+		double totalAmount = cartLists.stream()
+				.mapToDouble(c -> c.getSupPrice() * c.getCartQty())
+				.sum();
+		model.addAttribute("totalAmount", totalAmount);
+
 		return "supplement/orderForm";
 	}
 
 	// 주문 완료 로직 처리 - [결제하기] 버튼 눌렀을 때 로직 처리
-	@RequestMapping("/supplement/orderComplete")
+	/*@RequestMapping("/supplement/orderComplete")
 	public String orderComplete(OrderInfoVO vo, @RequestParam String ordRcvPh1, @RequestParam String ordRcvPh2,
 			@RequestParam String ordRcvPh3, HttpSession session) {
 
@@ -152,6 +163,6 @@ public class CartListController {
 		// 주문 정보 저장
 		cartListService.insertOrderInfo(vo);
 		return "supplement/orderComplete";
-	}
+	}*/
 
 }
