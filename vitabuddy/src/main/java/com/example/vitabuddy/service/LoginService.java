@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 public class LoginService implements UserDetailsService {
 
     private final ILoginDAO dao;
-
     public LoginService(ILoginDAO dao) {
         this.dao = dao;
     }

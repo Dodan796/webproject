@@ -28,8 +28,6 @@ $(function () {
 
                   `);
 
-
-
                     var timerDuration = 3; // 2분 (120초)
                     timerInterval = setInterval(function () {
                         var minutes = Math.floor(timerDuration / 60);
