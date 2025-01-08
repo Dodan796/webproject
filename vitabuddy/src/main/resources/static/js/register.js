@@ -22,7 +22,7 @@ function pwCheck() {
     }
 }
 
-// 25.01.04수정
+/*// 25.01.04수정
 //emailCheck -> emailCheckfromDB()로 수정.
 function emailCheckfromDB() {
     if (document.getElementById('userEmail').value.indexOf("@") > 0) {
@@ -34,7 +34,7 @@ function emailCheckfromDB() {
         email = 0;
     }
     console.log("email 상태: ", email); // 디버깅 로그
-}
+}*/
 
 // 아이디 중복 체크
 function fnDbCheckId() {

@@ -95,6 +95,7 @@ public class EmailVerificationService implements IEmailVerificationService {
 
     // 이메일 전송 관련 필드
     private final JavaMailSender javaGmailSender;
+    private String code;
 
     // 이메일 메시지 생성
     @Override
@@ -122,7 +123,7 @@ public class EmailVerificationService implements IEmailVerificationService {
     @Override
     public String sendSimpleMessage(String userEmail) throws MessagingException, IOException {
         // 새로운 인증 코드 생성
-        String code = createCode();
+        code = createCode();
         System.out.println("생성된 인증코드: " + code);
 
         // Redis 데이터 갱신
