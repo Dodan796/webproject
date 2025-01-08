@@ -48,6 +48,7 @@ public class webSecurityConfig {
         http.csrf((auth) -> auth.disable());
         http.formLogin((auth) -> auth.disable());
         http.logout(logout -> logout.disable()); // 기본 로그아웃 비활성화
+        http.headers(headerConfig->headerConfig.frameOptions(frameOptionsConfig->frameOptionsConfig.disable()));
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/WEB-INF/views/**").permitAll() // JSP 파일 접근 허용
                 .requestMatchers("/static/**").permitAll() // 정적 리소스 허용

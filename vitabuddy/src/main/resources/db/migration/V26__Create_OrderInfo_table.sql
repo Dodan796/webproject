@@ -10,7 +10,8 @@ create table OrderInfo(
     OrdRcvPhone VARCHAR2(20) NOT NULL,     
     OrdRcvEmail VARCHAR2(100) NOT NULL,      
     OrdRcvMsg VARCHAR2(500),               
-    OrdPay VARCHAR2(50) NOT NULL,   
+    OrdPay VARCHAR2(50) NOT NULL,
+    PaymentKey VARCHAR2(100),
     primary key(OrderId),
 	foreign key(UserID) references users(UserID)
 	

@@ -20,16 +20,15 @@ import com.example.vitabuddy.service.IReviewService;
 @Controller
 public class HomeController {
 
-	// 1. 인트로 화면 (로그인화면)
-	@RequestMapping("/intro") // intro 추가
-	public String intro() {
-		return "intro";
-	}
+    // 1. 인트로 화면 (로그인화면)
+    @RequestMapping("/intro") // intro 추가
+    public String intro() {
+        return "intro";
+    }
 
-	// 2. 메인홈페이지. => 회원용
+	// 2. 메인홈페이지.
 	@RequestMapping("/")
     public String home(Model model) {
-
         // 브랜드별 상위 1개의 상품을 가져옴
 		//기능별, 성분별 상위 상품 추가
         List<SupplementStoreVO> topSupplementsByBrand = reviewService.getTopSupplementsByBrand();
@@ -53,10 +52,10 @@ public class HomeController {
     @Autowired
     private IReviewService reviewService;
 
-	// 4. 상점 페이지 추가
-	@RequestMapping("/supplementList")
-	public String supplementList() {
-		return "supplement/supplementList"; // supplementList.jsp로 연결
-	}
+    // 4. 상점 페이지 추가
+    @RequestMapping("/supplementList")
+    public String supplementList() {
+        return "supplement/supplementList"; // supplementList.jsp로 연결
+    }
 
 }

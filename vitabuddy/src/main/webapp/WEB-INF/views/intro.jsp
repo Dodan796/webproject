@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>로그인</title>
 
-<c:import url="/WEB-INF/views/layout/head.jsp" />	
+<c:import url="/WEB-INF/views/layout/head.jsp" />
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/intro.css'/>">
 <script src="<c:url value='/js/login.js'/>" defer></script>
 <script src="<c:url value='/js/kakaoOAuth.js'/>"></script>
@@ -15,18 +15,16 @@
 </head>
 <body>
 <div id="wrap">
-	<!-- 인트로 이미지 -->
-	<div class="introTitle">
-		<img src="<c:url value='/image/mainImage.png'/>" id="logoImg">
-	</div>
+    <!-- 인트로 이미지 -->
+    <div class="introTitle">
+        <img src="<c:url value='/image/mainImage.png'/>" id="logoImg">
+    </div>
 
+    <section>
+        <h1 class="main-title">
+            WELCOME TO YOUR<br>HEALTH PARTNER VITABUDDY
+        </h1>
 
-
-	<section>
-
-	<h1 class="main-title">
-		WELCOME TO YOUR<br>HEALTH PARTNER VITABUDDY
-		</h1>
         <!-- 로그인 폼 -->
         <div class="loginForm">
             <form id="loginForm">
@@ -49,25 +47,33 @@
                 Login with Google
             </a>
         </div>
-	</section>
 
-<br>
-	<section>	
-           <!-- 회원가입 -->
-        <div>   
+        <!-- 네이버 로그인 버튼 -->
+        <div class="social-login">
+            <p>소셜 계정으로 로그인</p>
+            <a href="<c:url value='/member/socialLogin/naver'/>">
+                <img src="<c:url value='/image/naverLoginbtn.png'/>" alt="네이버 로그인" id="naverLoginBtn">
+            </a>
+        </div>
+    </section>
+
+    <br>
+    <section>
+        <!-- 회원가입 -->
+        <div>
             <p>아직 회원이 아니신가요?</p>
             <a href="<c:url value='/member/register'/>" class="btn btnFilled">
-				회원가입
-			</a>
+                회원가입
+            </a>
         </div>
 
         <!-- 로그인 하지 않은 상태로 메인 이동 -->
         <div>
-        	<a href="<c:url value='/'/>">
-				둘러보기
-			</a>
+            <a href="<c:url value='/'/>">
+                둘러보기
+            </a>
         </div>
-	</section>  
-</div>	
+    </section>
+</div>
 </body>
 </html>
